@@ -28,8 +28,11 @@
     .retro-header{display:none}
     .top{display:flex;align-items:center;gap:24px;position:relative}
     .display{background:#fff;color:#343835;min-height:54px;min-width:0;flex:1;display:flex;align-items:center;gap:13px;padding:10px 17px;border-radius:4px;border:1px solid #e9e9e9;box-shadow:inset 0 1px 2px #00000009;font:500 clamp(11px,1.4vw,13px)/1.3 'IBM Plex Mono',Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .display:before{content:'';width:5px;height:5px;flex:none;border-radius:50%;background:#c9c9c4}
-    .radio.on-air .display:before{background:#e66b40;box-shadow:0 0 0 3px #e66b4020}
+    .playback-control{flex:none;width:18px;height:18px;padding:0;border:0;border-radius:50%;background:transparent;display:grid;place-items:center;cursor:default}
+    .playback-control:before{content:'';width:5px;height:5px;border-radius:50%;background:#c9c9c4}
+    .playback-control.is-playing,.playback-control.is-paused{background:#e66b40;cursor:pointer}
+    .playback-control.is-playing:before{width:7px;height:8px;border-radius:0;background:linear-gradient(90deg,#fff 0 33%,transparent 33% 67%,#fff 67% 100%)}
+    .playback-control.is-paused:before{width:0;height:0;border-radius:0;background:none;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid #fff;margin-left:2px}
     .display span{overflow:hidden;text-overflow:ellipsis}
     .radio.on-air .display span{font-size:clamp(11px,1.4vw,13px);letter-spacing:.09em}
     .display{cursor:text}
@@ -123,8 +126,10 @@
     [data-theme=retro] .taskbar-button img{width:20px;height:20px;image-rendering:pixelated}
     [data-theme=retro] .top{gap:10px}
     [data-theme=retro] .display{min-height:43px;padding:7px 10px;background:#fff;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;box-shadow:inset 1px 1px 0 #000;color:#000;font:13px/1.25 Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;text-transform:none}
-    [data-theme=retro] .display:before{width:7px;height:7px;border-radius:0;background:#808080}
-    [data-theme=retro] .radio.on-air .display:before{background:#008000;box-shadow:none}
+    [data-theme=retro] .playback-control:before{width:7px;height:7px;border-radius:0;background:#808080}
+    [data-theme=retro] .playback-control.is-playing,[data-theme=retro] .playback-control.is-paused{border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0}
+    [data-theme=retro] .playback-control.is-playing:before{width:7px;height:8px;background:linear-gradient(90deg,#000 0 33%,transparent 33% 67%,#000 67% 100%)}
+    [data-theme=retro] .playback-control.is-paused:before{width:0;height:0;background:none;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid #000}
     [data-theme=retro] .radio.on-air .display span{font-size:13px;letter-spacing:0}
     [data-theme=retro] .display input::placeholder{color:#777}
     [data-theme=retro] .add{width:43px;height:43px;padding:0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:1px 1px 0 #000;color:#000;transition:none}
@@ -175,13 +180,13 @@
       .wordmark{font-size:clamp(23px,6.2vw,28px)}
       .theme-controls{margin-left:0;justify-self:end;gap:8px}
       .theme-name{font-size:9px;letter-spacing:.04em}
-      .theme-toggle{width:46px;height:44px}
+      .theme-toggle{width:46px;height:25px}
       .radio{width:calc(100% - 24px);padding:22px 16px 29px;border-radius:20px}
       .top{gap:12px}
       .display{min-height:50px;padding:10px 12px;font-size:11px;letter-spacing:.06em}
       .display input{font-size:16px;letter-spacing:0;text-transform:none}
       .add{width:46px;height:46px}
-      .presets{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 8px;margin:35px auto 0}
+      .presets{grid-template-columns:repeat(2,minmax(0,1fr));max-width:300px;gap:30px 18px;margin:35px auto 0}
       .preset,.preset.empty{width:min(86px,100%);height:auto;aspect-ratio:1}
       .preset-slot{gap:11px}
       .preset-label{font-size:10px;letter-spacing:.04em}
@@ -200,7 +205,7 @@
       [data-theme=retro] .theme-row{display:flex;justify-content:flex-end;margin-top:18px;min-height:50px;padding:8px}
       [data-theme=retro] .radio{position:relative;top:auto!important;left:auto!important;transform:none!important;width:calc(100% - 24px);max-height:none;overflow:visible;padding:0 10px 20px}
       [data-theme=retro] .radio.maximized{position:fixed;overflow:auto}
-      [data-theme=retro] .theme-toggle{height:44px}
+      [data-theme=retro] .theme-toggle{height:26px}
       [data-theme=retro] .retro-header{height:48px;margin:2px -6px 14px;padding:0 5px;cursor:default;touch-action:auto}
       [data-theme=retro] .retro-header strong{font-size:12px;overflow:hidden;text-overflow:ellipsis}
       [data-theme=retro] .window-controls{flex:none}
@@ -208,7 +213,7 @@
       [data-theme=retro] .top{gap:8px}
       [data-theme=retro] .display{min-height:46px;font-size:13px}
       [data-theme=retro] .add{width:46px;height:46px}
-      [data-theme=retro] .presets{margin:21px auto 0;gap:16px 4px}
+      [data-theme=retro] .presets{grid-template-columns:repeat(2,minmax(0,1fr));max-width:300px;margin:21px auto 0;gap:16px 8px}
       [data-theme=retro] .preset,[data-theme=retro] .preset.empty{width:min(84px,100%);height:70px}
       [data-theme=retro] .preset-label{font-size:11px}
       [data-theme=retro] .search-popover{top:calc(100% + 8px);left:0;width:100%;max-height:min(62dvh,520px);border-radius:0}
@@ -231,7 +236,7 @@
   <main class="radio" aria-label="Kern Pop Radio">
     <div class="retro-header" id="retro-header"><strong><span class="window-icon" aria-hidden="true">♫</span>Kern Pop Radio</strong><span class="window-controls"><button type="button" id="window-minimize" aria-label="Minimize Kern Pop Radio" title="Minimize">_</button><button type="button" id="window-maximize" aria-label="Maximize Kern Pop Radio" title="Maximize">□</button><button type="button" id="window-close" aria-label="Close Kern Pop Radio" title="Close">×</button></span></div>
     <div class="top">
-      <div class="display" id="display-box" aria-live="polite"><span id="display">Choose a station</span><input id="search" type="search" placeholder="Search radio stations…" aria-label="Search radio stations" autocomplete="off" hidden></div>
+      <div class="display" id="display-box"><button class="playback-control" id="playback-control" type="button" aria-label="No station playing" disabled></button><span id="display" aria-live="polite">Choose a station</span><input id="search" type="search" placeholder="Search radio stations…" aria-label="Search radio stations" autocomplete="off" hidden></div>
       <button class="add" id="add" aria-label="Add or edit a station" title="Add or edit a station">+</button>
       <div class="search-popover" id="search-popover" hidden>
         <div class="search-top"><span>Save to preset</span><select id="search-slot" aria-label="Preset to save station"></select></div>
@@ -309,7 +314,7 @@
         if(Array.isArray(rows))savedStations=rows.filter(s=>s&&typeof s.name==='string'&&typeof s.url==='string'&&s.url.startsWith('https://')).map(s=>({name:s.name,url:s.url,uuid:typeof s.uuid==='string'?s.uuid:''})).slice(0,50);
         if(stored===null)localStorage.setItem(savedKey,JSON.stringify(savedStations));
       }catch{}
-      let selected=-1,playing=false,request=0,searchTimer,searchAbort,searchOpen=false,place=null;
+      let selected=-1,playing=false,paused=false,request=0,searchTimer,searchAbort,searchOpen=false,place=null;
       const audio=$('audio'),list=$('presets');
       let hls=null,activeUrl='',cancelPreparation=null,preparing=false,recoveryUsed=false,recovering=false;
       function restoreWindow(){windowState=windowState==='minimized'?beforeMinimize:'normal';syncWindow()}
@@ -378,12 +383,20 @@
       function render(){
         list.replaceChildren();
         document.querySelector('.radio').classList.toggle('on-air',playing);
+        const control=$('playback-control');
+        const current=stations[selected],canPause=Boolean(current&&playing),canResume=Boolean(current&&paused);
+        control.classList.toggle('is-playing',canPause);
+        control.classList.toggle('is-paused',canResume);
+        control.disabled=!(canPause||canResume);
+        control.setAttribute('aria-label',canPause?'Pause '+current.name:canResume?'Resume '+current.name:'No station playing');
+        control.title=canPause?'Pause':canResume?'Resume':'';
         stations.forEach((station,i)=>{
-          const slot=document.createElement('div');slot.className='preset-slot'+(station?' filled':'')+(playing&&selected===i?' current':'');
+          const active=selected===i;
+          const slot=document.createElement('div');slot.className='preset-slot'+(station?' filled':'')+(active&&playing?' current':'');
           const button=document.createElement('button');
-          button.type='button';button.className='preset'+(station?'':' empty')+(playing&&selected===i?' playing':'');
+          button.type='button';button.className='preset'+(station?'':' empty')+(active&&playing?' playing':'');
           const label=station?station.name:'Empty preset';
-          button.setAttribute('aria-label',station?(playing&&selected===i?'Pause ':'Play ')+label+', preset '+(i+1):'Add station to preset '+(i+1));
+          button.setAttribute('aria-label',station?(active&&playing?'Pause ':active&&paused?'Resume ':'Play ')+label+', preset '+(i+1):'Add station to preset '+(i+1));
           button.title=label+' · '+(i+1);
           button.addEventListener('click',()=>station?tune(i):openSearch(i));
           const file=document.createElement('span');file.className='file-icon';file.setAttribute('aria-hidden','true');
@@ -393,7 +406,7 @@
           for(const kind of ['track','fill']){const arc=document.createElementNS('http://www.w3.org/2000/svg','path');arc.setAttribute('class',kind);arc.setAttribute('d','M 27 104 A 55 55 0 1 1 95 104');arc.setAttribute('pathLength','100');ring.append(arc)}
           button.append(ring);
           const caption=document.createElement(station?'button':'span');caption.className='preset-label';caption.textContent=station?station.name:'Empty';
-          if(station){const action=playing&&selected===i?'Pause ':'Play ';caption.type='button';caption.title=retro?action+station.name:'Change '+station.name;caption.setAttribute('aria-label',retro?action+station.name+', preset '+(i+1):'Change station in preset '+(i+1));caption.addEventListener('click',()=>retro?tune(i):openSearch(i))}
+          if(station){const action=active&&playing?'Pause ':active&&paused?'Resume ':'Play ';caption.type='button';caption.title=retro?action+station.name:'Change '+station.name;caption.setAttribute('aria-label',retro?action+station.name+', preset '+(i+1):'Change station in preset '+(i+1));caption.addEventListener('click',()=>retro?tune(i):openSearch(i))}
           slot.append(button,caption);list.append(slot);
         });
       }
@@ -432,7 +445,7 @@
           try{await Promise.race([audio.play(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Stream timed out')),15000)})])}
           finally{clearTimeout(timer)}
           if(id!==request||audio.paused)return false;
-          playing=true;display('Now playing '+stations[i].name);$('status').textContent='Playing '+stations[i].name;render();
+          playing=true;paused=false;display('Now playing '+stations[i].name);$('status').textContent='Playing '+stations[i].name;render();
           return true;
         }finally{preparing=false}
       }
@@ -450,7 +463,7 @@
       }
       function unavailable(i,id){
         if(id!==request)return;
-        playing=false;display('Stream unavailable');$('status').textContent='Could not play '+stations[i].name+'. Try another station or stream URL.';render();
+        playing=false;paused=false;display('Stream unavailable');$('status').textContent='Could not play '+stations[i].name+'. Try another station or stream URL.';render();
       }
       async function onPlaybackError(){
         if(selected<0||preparing||recovering)return;
@@ -465,7 +478,7 @@
         if(playing&&selected===i){audio.pause();return}
         const thisRequest=++request;
         recoveryUsed=false;
-        selected=i;playing=false;display('Tuning '+station.name+'…');$('status').textContent='Connecting to '+station.name;render();
+        selected=i;playing=false;paused=false;display('Tuning '+station.name+'…');$('status').textContent='Connecting to '+station.name;render();
         try{
           if(await startPlayback(i,thisRequest,station.url)){
             if(station.uuid)fetch('https://de1.api.radio-browser.info/json/url/'+encodeURIComponent(station.uuid),{method:'POST',keepalive:true}).catch(()=>{});
@@ -479,9 +492,10 @@
       audio.addEventListener('playing',()=>{
         const station=stations[selected];
         if(!station||audio.paused||preparing)return;
-        playing=true;display('Now playing '+station.name);$('status').textContent='Playing '+station.name;render();
+        playing=true;paused=false;display('Now playing '+station.name);$('status').textContent='Playing '+station.name;render();
       });
-      audio.addEventListener('pause',()=>{if(playing&&stations[selected]){playing=false;display('Paused '+stations[selected].name);$('status').textContent='Paused '+stations[selected].name;render()}});
+      audio.addEventListener('pause',()=>{if(playing&&stations[selected]){playing=false;paused=true;display('Paused '+stations[selected].name);$('status').textContent='Paused '+stations[selected].name;render()}});
+      $('playback-control').addEventListener('click',event=>{event.stopPropagation();if(stations[selected]&&(playing||paused))tune(selected)});
       audio.addEventListener('error',onPlaybackError);
       function chooseStation(station){
         const i=Number($('search-slot').value),previous=stations[i],samePlaying=playing&&selected===i&&previous?.url===station.url;
