@@ -105,7 +105,7 @@
     [data-theme=retro] .window-controls button{display:grid;place-items:center;width:19px;height:19px;padding:0;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;box-shadow:none;color:#000;font:700 12px Arial,sans-serif;line-height:1;cursor:default}
     [data-theme=retro] .window-controls button:active{border-color:#404040 #fff #fff #404040;padding:1px 0 0 1px}
     .desktop-folder,.taskbar-button{display:none}
-    [data-theme=retro] .desktop-folder:not([hidden]){position:fixed;left:16px;bottom:17px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:4px;width:82px;padding:4px;border:1px solid transparent;background:transparent;color:#fff;text-shadow:1px 1px #000;text-align:center;font:12px Tahoma,'MS Sans Serif',Arial,sans-serif}
+    [data-theme=retro] .desktop-folder:not([hidden]){position:fixed;left:50%;top:460px;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:4px;width:82px;padding:4px;border:1px solid transparent;background:transparent;color:#fff;text-shadow:1px 1px #000;text-align:center;font:12px Tahoma,'MS Sans Serif',Arial,sans-serif}
     [data-theme=retro] .desktop-folder img{width:48px;height:48px;image-rendering:pixelated}
     [data-theme=retro] .desktop-folder:hover,[data-theme=retro] .desktop-folder:focus-visible{border:1px dotted #fff;background:#00008080}
     [data-theme=retro] .taskbar-button:not([hidden]){position:fixed;left:8px;bottom:8px;z-index:3;display:flex;align-items:center;gap:5px;min-width:140px;padding:3px 7px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;box-shadow:1px 1px #000;color:#000;text-align:left;font:12px Tahoma,'MS Sans Serif',Arial,sans-serif}
@@ -255,6 +255,10 @@
       $('window-minimize').addEventListener('click',()=>{beforeMinimize=windowState;windowState='minimized';syncWindow()});
       $('window-maximize').addEventListener('click',()=>{windowState=windowState==='maximized'?'normal':'maximized';syncWindow()});
       $('window-close').addEventListener('click',()=>{
+        const rect=windowRadio.getBoundingClientRect(),folder=$('desktop-folder');
+        const x=Math.max(41,Math.min(window.innerWidth-41,rect.left+rect.width/2));
+        const y=Math.max(0,Math.min(window.innerHeight-86,rect.bottom+16));
+        folder.style.left=x+'px';folder.style.top=y+'px';
         audio.pause();if(searchOpen)closeSearch();if($('editor').open)$('editor').close();
         windowState='closed';syncWindow();
       });
