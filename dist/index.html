@@ -56,10 +56,10 @@
     .preset{position:relative;border:1px solid #f8f8f8;background:radial-gradient(circle at 38% 30%,#fff 0%,#fcfcfd 42%,#f3f3f5 78%,#ececef 100%);border-radius:50%;width:92px;height:92px;max-width:100%;aspect-ratio:1;display:grid;place-items:center;color:#777;margin-top:0;box-shadow:inset 1px 2px 3px #fff,inset -1px -2px 3px #e3e3e6,0 2px 1px #b4b4b7,2px 4px 4px #0000002d,6px 9px 16px #00000014;transition:transform .15s,box-shadow .15s}
     .preset:after{content:'';position:absolute;z-index:1;width:10px;height:10px;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);background:#e96c3e}
     .preset:hover{transform:translateY(1px);box-shadow:inset 1px 2px 3px #fff,inset -1px -2px 3px #e3e3e6,0 1px 1px #b4b4b7,2px 3px 3px #00000029,5px 7px 12px #00000010}
-    .preset.playing{transform:translateY(2px);box-shadow:inset 1px 2px 3px #fff,inset -1px -2px 3px #dcdce0,0 1px 1px #aeafb2,1px 2px 3px #00000029}
+    .preset.playing{transform:translateY(3px);border-color:#bfc0c2;background:radial-gradient(circle at 50% 64%,#dedfe2 0%,#cbccd0 67%,#e4e5e7 100%);box-shadow:inset 4px 6px 11px #00000042,inset -2px -2px 5px #ffffff9c,0 1px 0 #fff}
     .preset.playing:after{box-shadow:0 0 0 3px #ee704224}
     .level-ring{display:none;position:absolute;z-index:2;left:50%;top:50%;width:122px;height:122px;overflow:visible;transform:translate(-50%,-50%);pointer-events:none}
-    .level-ring path{fill:none;stroke-width:7;stroke-linecap:butt}
+    .level-ring path{fill:none;stroke-width:7;stroke-linecap:round}
     .level-ring .track{stroke:#a9aba9}
     .level-ring .fill{stroke:#e96c3e;stroke-dasharray:12 100;animation:meter-fill 2.8s ease-in-out infinite}
     .preset.playing .level-ring{display:block}
@@ -112,11 +112,13 @@
     [data-theme=retro] .preset:after,[data-theme=retro] .preset.empty:after{content:none}
     [data-theme=retro] .preset.playing .level-ring{display:none}
     [data-theme=retro] .preset:hover,[data-theme=retro] .preset.playing,[data-theme=retro] .preset:active{transform:none;border:1px dotted #000;background:transparent;box-shadow:none}
-    [data-theme=retro] .file-icon{display:block;width:62px;height:58px;pointer-events:none}
-    [data-theme=retro] .file-icon svg{display:block;width:62px;height:58px;shape-rendering:crispEdges}
-    [data-theme=retro] .folder-open,[data-theme=retro] .folder-empty{display:none}
-    [data-theme=retro] .preset.playing .folder-closed,[data-theme=retro] .preset.empty .folder-closed{display:none}
-    [data-theme=retro] .preset.playing .folder-open,[data-theme=retro] .preset.empty .folder-empty{display:block}
+    [data-theme=retro] .file-icon{display:grid;place-items:center;position:relative;width:62px;height:58px;pointer-events:none}
+    [data-theme=retro] .file-icon img{width:48px;height:48px;object-fit:contain;image-rendering:pixelated}
+    [data-theme=retro] .folder-open{display:none}
+    [data-theme=retro] .preset.playing .folder-closed{display:none}
+    [data-theme=retro] .preset.playing .folder-open{display:block}
+    [data-theme=retro] .preset.empty .folder-closed{opacity:.45}
+    [data-theme=retro] .preset.empty .file-icon:after{content:'+';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#303030;background:#c0c0c0;border:1px solid #777;padding:0 3px;font:700 16px/1 Tahoma,Arial,sans-serif}
     [data-theme=retro] .preset-label{font:12px Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;text-transform:none;color:#000}
     [data-theme=retro] .preset-slot.current .preset-label{background:#000080;color:#fff;padding:2px 4px}
     [data-theme=retro] button.preset-label:hover{color:#000080;text-decoration:underline}
@@ -228,7 +230,7 @@
           button.title=label+' · '+(i+1);
           button.addEventListener('click',()=>station?tune(i):openSearch(i));
           const file=document.createElement('span');file.className='file-icon';file.setAttribute('aria-hidden','true');
-          file.innerHTML='<svg viewBox="0 0 64 58" aria-hidden="true"><g class="folder-closed"><path d="M6 15h18l5 5h28v27H6z" fill="#bd9442" stroke="#645537"/><path d="M7 15h17l5 5h27v6H7z" fill="#ffeba8" stroke="#786638"/><path d="M5 24h53l-5 26H10z" fill="#e9c46c" stroke="#645537"/><path d="M8 25h48M11 47h40" stroke="#fff2b7"/><path d="M11 49h41" stroke="#a07837"/></g><g class="folder-open"><path d="M6 18h18l5 5h27v24H6z" fill="#bd9442" stroke="#645537"/><path d="M14 11h35v32H14z" fill="#fff" stroke="#555"/><path d="M20 16h21M20 20h16" stroke="#9b9b9b"/><path d="M5 31h54l-8 20H7z" fill="#f0cf78" stroke="#645537"/><path d="M7 32h50M9 48h41" stroke="#fff1ac"/></g><g class="folder-empty"><path d="M6 15h18l5 5h28v27H6z" fill="#d4d4d4" stroke="#898989" stroke-dasharray="2 2"/><path d="M5 24h53l-5 26H10z" fill="#e2e2e2" stroke="#898989" stroke-dasharray="2 2"/><path d="M31 31v12M25 37h12" stroke="#707070" stroke-width="2"/></g></svg>';
+          file.innerHTML='<img class="folder-closed" src="./folder-closed.png" alt=""><img class="folder-open" src="./folder-open.png" alt="">';
           button.append(file);
           const ring=document.createElementNS('http://www.w3.org/2000/svg','svg');ring.setAttribute('class','level-ring');ring.setAttribute('viewBox','0 0 122 122');ring.setAttribute('aria-hidden','true');
           for(const kind of ['track','fill']){const arc=document.createElementNS('http://www.w3.org/2000/svg','path');arc.setAttribute('class',kind);arc.setAttribute('d','M 27 104 A 55 55 0 1 1 95 104');arc.setAttribute('pathLength','100');ring.append(arc)}
