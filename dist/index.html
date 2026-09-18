@@ -18,7 +18,8 @@
     button,input,select{font:inherit}
     button{cursor:pointer}
     button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #e8754d;outline-offset:4px}
-    .theme-row{width:min(510px,calc(100% - 40px));margin:clamp(26px,8vh,76px) auto 14px;display:flex;justify-content:flex-end;align-items:center;gap:10px}
+    .theme-row{width:min(510px,calc(100% - 40px));margin:clamp(26px,8vh,76px) auto 24px;display:flex;justify-content:flex-start;align-items:center;gap:10px}
+    .wordmark{width:min(510px,calc(100% - 40px));margin:0 auto 15px;color:#454744;font:700 clamp(27px,5vw,34px)/1 'Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:-.055em}
     .theme-name{font-size:10px;letter-spacing:.1em;color:#767976;white-space:nowrap}
     .theme-toggle{width:46px;height:25px;padding:2px;border:1px solid #d4d5d2;border-radius:20px;background:#ededeb;box-shadow:inset 0 1px 2px #00000012;display:flex;align-items:center;transition:background .2s}
     .theme-thumb{width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:transform .2s}
@@ -88,7 +89,8 @@
     [data-theme=retro]{font-family:Tahoma,'MS Sans Serif',Arial,sans-serif;background:#008080;color:#000}
     [data-theme=retro] body{min-height:100vh}
     [data-theme=retro] button:focus-visible,[data-theme=retro] input:focus-visible,[data-theme=retro] select:focus-visible{outline:1px dotted #000;outline-offset:-5px}
-    [data-theme=retro] .theme-row{justify-content:center;margin-top:clamp(24px,7vh,68px);padding:10px 14px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:1px 1px 0 #000}
+    [data-theme=retro] .theme-row{justify-content:flex-start;margin-top:clamp(24px,7vh,68px);padding:10px 14px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:1px 1px 0 #000}
+    [data-theme=retro] .wordmark{padding:8px 10px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:1px 1px 0 #000;font-size:30px;letter-spacing:-.055em}
     [data-theme=retro] .theme-name{font:12px Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;color:#000}
     [data-theme=retro] .theme-toggle{width:48px;height:26px;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;background:#c0c0c0;box-shadow:inset 1px 1px 0 #000}
     [data-theme=retro] .theme-thumb{width:20px;height:18px;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:none;transform:translateX(21px)}
@@ -161,6 +163,7 @@
     <button class="theme-toggle" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Windows 98 theme"><span class="theme-thumb" aria-hidden="true"></span></button>
     <span class="theme-name">WINDOWS 98</span>
   </div>
+  <h1 class="wordmark">Little Radio.</h1>
   <main class="radio" aria-label="Little radio">
     <div class="retro-header" aria-hidden="true"><strong><span class="window-icon">♫</span>Little Radio</strong><span class="window-controls"><i>_</i><i>□</i><i>×</i></span></div>
     <div class="top">
