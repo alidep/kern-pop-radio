@@ -14,25 +14,42 @@
     button,input,select{font:inherit}
     button{cursor:pointer}
     button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #e8754d;outline-offset:4px}
-    .radio{width:min(820px,calc(100% - 40px));margin:clamp(20px,8vh,80px) auto 0;background:#fff;min-height:308px;padding:45px clamp(20px,7vw,83px) 41px;border:1px solid #e8e8e6;border-radius:18px;box-shadow:0 1px 2px #00000008,0 22px 48px #0000000a}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:25px}
+    .radio{width:min(820px,calc(100% - 40px));margin:clamp(20px,8vh,80px) auto 0;background:#f8f8fa;min-height:308px;padding:45px clamp(20px,7vw,83px) 41px;border:1px solid #f1f1f1;border-radius:24px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:25px;position:relative}
     .display{background:#f9f9f7;color:#30312e;min-height:64px;width:min(469px,calc(100% - 75px));display:flex;align-items:center;gap:15px;padding:11px 20px;border-radius:5px;border:1px solid #e2e2df;box-shadow:inset 0 2px 5px #0000000b;font:500 clamp(16px,2.2vw,20px)/1.25 Arial,Helvetica,sans-serif;letter-spacing:-.035em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .display:before{content:'';width:6px;height:6px;flex:none;border-radius:50%;background:#cbcbc7}
     .radio.on-air .display:before{background:#ed7548;box-shadow:0 0 0 3px #ed754820}
     .display span{overflow:hidden;text-overflow:ellipsis}
+    .display{cursor:text}
+    .display input{border:0;background:transparent;min-width:0;width:100%;font:inherit;color:inherit;outline:0;padding:0;margin:0}
+    .display input::placeholder{color:#777b74}
+    [hidden]{display:none!important}
+    .search-popover{position:absolute;z-index:5;top:73px;left:0;width:min(469px,calc(100% - 75px));background:#fff;border:1px solid #e3e3df;border-radius:7px;box-shadow:0 12px 28px #0000001c;padding:8px;max-height:290px;overflow:auto}
+    .search-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:5px 8px 10px;border-bottom:1px solid #ededeb;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+    .search-top select{width:auto;max-width:62%;padding:3px 6px;margin:0;border:0;background:#f5f5f2;font-size:12px;color:#333;font-weight:600}
+    .search-results{display:flex;flex-direction:column;gap:2px;padding-top:4px}
+    .search-result{border:0;border-radius:4px;background:#fff;padding:10px 8px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:12px;color:#292b28;width:100%}
+    .search-result:hover,.search-result:focus-visible{background:#f4f4f1}
+    .result-name{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .result-meta{font-size:11px;color:#92958e;white-space:nowrap}
+    .search-message{font-size:13px;line-height:1.4;color:#777b74;padding:13px 8px}
+    .manual{border:0;background:transparent;color:#777b74;font-size:11px;padding:9px 8px 3px;text-decoration:underline;text-underline-offset:3px}
     .add{width:51px;height:51px;flex:none;border:1px solid #dcdcd8;border-radius:50%;background:linear-gradient(#fff,#f6f6f4);color:#363934;display:grid;place-items:center;font-size:28px;font-weight:300;line-height:1;padding:0 0 3px;box-shadow:0 2px 4px #00000014,inset 0 1px 0 #fff;transition:transform .15s,box-shadow .15s}
     .add:hover{transform:translateY(1px);box-shadow:0 1px 2px #00000016,inset 0 1px 0 #fff}
-    .presets{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(12px,3.5vw,32px);margin-top:55px;align-items:start}
-    .preset-slot{min-width:0;display:flex;flex-direction:column;align-items:center;gap:13px}
-    .preset{border:1px solid #dadad7;background:linear-gradient(145deg,#fff 20%,#f3f3f0);border-radius:50%;width:72px;height:72px;max-width:100%;aspect-ratio:1;display:grid;place-items:center;color:#777;box-shadow:inset 0 1px 1px #fff,0 2px 3px #00000014,0 7px 12px #0000000a;transition:transform .15s,box-shadow .15s}
-    .preset:after{content:'';width:7px;height:7px;border-radius:50%;background:#c5c5c1}
-    .preset:hover{transform:translateY(1px);box-shadow:inset 0 1px 1px #fff,0 1px 2px #00000016,0 4px 8px #00000009}
-    .preset.playing{background:linear-gradient(145deg,#fafaf8,#f0f0ed);border-color:#c9c9c5;box-shadow:inset 0 2px 4px #00000015,0 1px 2px #0000000b}
-    .preset.playing:after{content:'';width:9px;height:9px;border-radius:50%;background:#ee7042;box-shadow:0 0 0 4px #ee70421b}
-    .preset.empty{border:1px dashed #c8c8c4;background:#fff;box-shadow:none;color:#b6b6b2}
-    .preset.empty:after{content:'+';width:auto;height:auto;background:none;font-size:21px;font-weight:300;line-height:1}
+    .presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 44px;max-width:440px;margin:50px auto 0;align-items:start}
+    .preset-slot{min-width:0;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative}
+    .preset-slot.filled:before{display:none}
+    .preset{position:relative;border:1px solid #f0f0f0;background:linear-gradient(145deg,#fff 10%,#f1f1f2);border-radius:50%;width:84px;height:84px;max-width:100%;aspect-ratio:1;display:grid;place-items:center;color:#777;margin-top:0;box-shadow:inset 0 2px 3px #fff,4px 9px 14px #00000022,0 1px 2px #00000012;transition:transform .15s,box-shadow .15s}
+    .preset:after{content:'';position:absolute;width:9px;height:9px;border-radius:50%;left:34px;top:36px;background:#ee7042}
+    .preset:hover{transform:translateY(1px);box-shadow:inset 0 2px 3px #fff,2px 6px 10px #0000001e}
+    .preset.playing{background:linear-gradient(145deg,#fff,#ededed);box-shadow:inset 0 2px 3px #fff,2px 5px 9px #00000025}
+    .preset.playing:after{box-shadow:0 0 0 3px #ee704224}
+    .preset.empty{width:84px;height:84px;border:1px solid #f0f0f0;background:linear-gradient(145deg,#fff 10%,#f1f1f2);box-shadow:inset 0 2px 3px #fff,4px 9px 14px #00000018,0 1px 2px #0000000e;color:#b6b6b2}
+    .preset.empty:after{content:'+';width:auto;height:auto;position:static;background:none;font-size:20px;font-weight:300;line-height:1}
     .preset.empty:hover{background:#fafaf9}
     .preset-label{display:block;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;text-transform:uppercase;font-size:10px;letter-spacing:.11em;font-weight:600;color:#777a74}
+    button.preset-label{border:0;background:transparent;padding:0;cursor:pointer}
+    button.preset-label:hover{color:#ee7042}
     .status{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     dialog{border:1px solid #e5e5e1;border-radius:13px;padding:0;width:min(420px,calc(100% - 28px));box-shadow:0 20px 70px #0003;color:#202020;background:#fff}
     dialog::backdrop{background:#0007}
@@ -52,13 +69,14 @@
       .radio{padding:28px 25px 30px;min-height:0}
       .display{min-height:54px}
       .presets{grid-template-columns:repeat(3,1fr);gap:28px 12px;margin-top:42px}
-      .preset{width:70px;height:70px}
+      .preset,.preset.empty{width:78px;height:78px}
     }
     @media(max-width:400px){
       .radio{width:calc(100% - 28px);padding:24px 18px 29px}
       .display{font-size:16px;padding:9px 12px;width:calc(100% - 68px)}
       .presets{gap:22px 8px;margin-top:36px}
-      .preset{width:62px;height:62px}
+      .preset,.preset.empty{width:70px;height:70px}
+      .preset:after{left:28px;top:30px}
       .preset-label{font-size:9px;letter-spacing:.06em}
     }
     @media(prefers-reduced-motion:reduce){.preset{transition:none}}
@@ -67,8 +85,13 @@
 <body>
   <main class="radio" aria-label="Little radio">
     <div class="top">
-      <div class="display" aria-live="polite"><span id="display">Choose a station</span></div>
+      <div class="display" id="display-box" aria-live="polite"><span id="display">Choose a station</span><input id="search" type="search" placeholder="Search radio stations…" aria-label="Search radio stations" autocomplete="off" hidden></div>
       <button class="add" id="add" aria-label="Add or edit a station" title="Add or edit a station">+</button>
+      <div class="search-popover" id="search-popover" hidden>
+        <div class="search-top"><span>Save to preset</span><select id="search-slot" aria-label="Preset to save station"></select></div>
+        <div class="search-results" id="search-results"><div class="search-message">Type a station name to search.</div></div>
+        <button class="manual" id="manual" type="button">Use a stream URL instead</button>
+      </div>
     </div>
     <div class="presets" id="presets" aria-label="Six favorite stations"></div>
     <p class="status" id="status" role="status" aria-live="polite"></p>
@@ -104,9 +127,9 @@
       let stations=defaults;
       try{
         const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem('little-radio-presets-v2'));
-        if(Array.isArray(saved)&&saved.length===6)stations=saved.map(s=>s&&typeof s.name==='string'&&typeof s.url==='string'?{name:s.name,url:s.url}:null);
+        if(Array.isArray(saved)&&saved.length===6)stations=saved.map(s=>s&&typeof s.name==='string'&&typeof s.url==='string'?{name:s.name,url:s.url,uuid:typeof s.uuid==='string'?s.uuid:''}:null);
       }catch{}
-      let selected=-1,playing=false,request=0;
+      let selected=-1,playing=false,request=0,searchTimer,searchAbort,searchOpen=false;
       const audio=$('audio'),list=$('presets');
       function persist(){try{localStorage.setItem(key,JSON.stringify(stations))}catch{$('status').textContent='This browser could not save your stations.'}}
       function display(text){$('display').textContent=text}
@@ -114,20 +137,22 @@
         list.replaceChildren();
         document.querySelector('.radio').classList.toggle('on-air',playing);
         stations.forEach((station,i)=>{
-          const slot=document.createElement('div');slot.className='preset-slot';
+          const slot=document.createElement('div');slot.className='preset-slot'+(station?' filled':'');
           const button=document.createElement('button');
           button.type='button';button.className='preset'+(station?'':' empty')+(playing&&selected===i?' playing':'');
           const label=station?station.name:'Empty preset';
           button.setAttribute('aria-label',station?(playing&&selected===i?'Pause ':'Play ')+label+', preset '+(i+1):'Add station to preset '+(i+1));
           button.title=label+' · '+(i+1);
-          button.addEventListener('click',()=>station?tune(i):openEditor(i));
-          const caption=document.createElement('span');caption.className='preset-label';caption.textContent=station?station.name:'Empty';
+          button.addEventListener('click',()=>station?tune(i):openSearch(i));
+          const caption=document.createElement(station?'button':'span');caption.className='preset-label';caption.textContent=station?station.name:'Empty';
+          if(station){caption.type='button';caption.title='Change '+station.name;caption.setAttribute('aria-label','Change station in preset '+(i+1));caption.addEventListener('click',()=>openSearch(i))}
           slot.append(button,caption);list.append(slot);
         });
       }
       async function tune(i){
         const station=stations[i];
-        if(!station)return openEditor(i);
+        if(!station)return openSearch(i);
+        if(searchOpen)closeSearch();
         if(playing&&selected===i){audio.pause();return}
         const thisRequest=++request;
         if(selected!==i||audio.src!==station.url){audio.pause();audio.src=station.url;audio.load()}
@@ -136,6 +161,7 @@
           await audio.play();
           if(thisRequest!==request)return;
           playing=true;display('Now playing '+station.name);$('status').textContent='Playing '+station.name;render();
+          if(station.uuid)fetch('https://de1.api.radio-browser.info/json/url/'+encodeURIComponent(station.uuid),{method:'POST',keepalive:true}).catch(()=>{});
         }catch{
           if(thisRequest!==request)return;
           playing=false;display('Stream unavailable');$('status').textContent='Could not play '+station.name+'. Check its stream URL.';render();
@@ -143,6 +169,63 @@
       }
       audio.addEventListener('pause',()=>{if(playing){playing=false;display('Paused '+stations[selected].name);render()}});
       audio.addEventListener('error',()=>{if(selected>=0){playing=false;display('Stream unavailable');$('status').textContent='Check the station stream URL.';render()}});
+      function searchMessage(message){$('search-results').replaceChildren();const item=document.createElement('div');item.className='search-message';item.textContent=message;$('search-results').append(item)}
+      function closeSearch(){
+        searchOpen=false;clearTimeout(searchTimer);searchAbort?.abort();
+        $('search').hidden=true;$('display').hidden=false;$('search-popover').hidden=true;$('search').value='';
+      }
+      function openSearch(i){
+        if(!Number.isInteger(i)||i<0||i>5)i=0;
+        $('search-slot').replaceChildren();
+        stations.forEach((s,index)=>{const option=document.createElement('option');option.value=index;option.textContent=String(index+1).padStart(2,'0')+(s?' · '+s.name:' · Empty');$('search-slot').append(option)});
+        $('search-slot').value=String(i);$('display').hidden=true;$('search').hidden=false;$('search-popover').hidden=false;searchOpen=true;
+        $('search').value='';searchMessage('Type a station name to search.');$('search').focus();
+      }
+      async function searchStations(){
+        const q=$('search').value.trim();searchAbort?.abort();
+        if(q.length<2){searchMessage('Type at least two letters.');return}
+        const controller=new AbortController();searchAbort=controller;searchMessage('Searching…');
+        const params=new URLSearchParams({name:q,hidebroken:'true',is_https:'true',limit:'60',order:'votes',reverse:'true'});
+        const servers=['de1','de2','nl1'];let rows;
+        for(const server of servers){
+          try{
+            const response=await fetch('https://'+server+'.api.radio-browser.info/json/stations/search?'+params,{signal:controller.signal,headers:{'Accept':'application/json'}});
+            if(!response.ok)throw Error('Station directory unavailable');
+            rows=await response.json();break;
+          }catch(error){if(controller.signal.aborted)return}
+        }
+        if(controller.signal.aborted||!searchOpen||$('search').value.trim()!==q)return;
+        if(!Array.isArray(rows)){searchMessage('Search is unavailable. Try again or use a stream URL.');return}
+        const seen=new Set();
+        const matches=rows.filter(s=>{
+          const url=String(s.url_resolved||s.url||'');const codec=String(s.codec||'').toUpperCase();const name=String(s.name||'').trim();
+          const identity=(name+'|'+String(s.countrycode||'')).toLowerCase();
+          if(!name||!url.startsWith('https://')||s.hls===1||!/^(MP3|AAC)/.test(codec)||seen.has(identity))return false;
+          seen.add(identity);return true;
+        }).sort((a,b)=>{
+          const rank=s=>{const n=String(s.name||'').toLowerCase();const term=q.toLowerCase();return n===term?0:n.startsWith(term)?1:2};
+          return rank(a)-rank(b)||(Number(b.votes)||0)-(Number(a.votes)||0);
+        }).slice(0,8);
+        if(!matches.length){searchMessage('No playable matches. Try a shorter name or use a stream URL.');return}
+        $('search-results').replaceChildren();
+        matches.forEach(s=>{
+          const button=document.createElement('button');button.type='button';button.className='search-result';
+          const name=document.createElement('span');name.className='result-name';name.textContent=s.name;
+          const meta=document.createElement('span');meta.className='result-meta';meta.textContent=[s.countrycode,s.codec].filter(Boolean).join(' · ');
+          button.append(name,meta);
+          button.addEventListener('click',()=>{
+            const i=Number($('search-slot').value),url=String(s.url_resolved||s.url),label=String(s.name).trim();
+            if(i===selected&&stations[i]?.url!==url){++request;audio.pause();audio.removeAttribute('src');audio.load();playing=false;selected=-1}
+            stations[i]={name:label,url,uuid:String(s.stationuuid||'')};persist();render();closeSearch();tune(i);
+          });
+          $('search-results').append(button);
+        });
+      }
+      $('search').addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(searchStations,260)});
+      $('search').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeSearch()}if(e.key==='Enter'){e.preventDefault();$('search-results').querySelector('button')?.click()}});
+      $('display-box').addEventListener('click',()=>{if(!searchOpen){const empty=stations.findIndex(s=>!s);openSearch(empty<0?0:empty)}});
+      $('manual').addEventListener('click',()=>{const i=Number($('search-slot').value);closeSearch();openEditor(i)});
+      document.addEventListener('keydown',e=>{if(searchOpen||$('editor').open||e.metaKey||e.ctrlKey||e.altKey||e.key.length!==1||e.target.closest('input,select,textarea'))return;e.preventDefault();const empty=stations.findIndex(s=>!s);openSearch(empty<0?0:empty);$('search').value=e.key;clearTimeout(searchTimer);searchTimer=setTimeout(searchStations,260)});
       function fillSlot(){
         const i=Number($('slot').value),s=stations[i];
         $('name').value=s?.name||'';$('url').value=s?.url||'';
@@ -154,7 +237,7 @@
         stations.forEach((s,index)=>{const option=document.createElement('option');option.value=index;option.textContent=String(index+1).padStart(2,'0')+(s?' · '+s.name:' · Empty');$('slot').append(option)});
         $('slot').value=String(i);fillSlot();$('editor').showModal();$('name').focus();
       }
-      $('add').addEventListener('click',()=>{const empty=stations.findIndex(s=>!s);openEditor(empty<0?0:empty)});
+      $('add').addEventListener('click',()=>{if(searchOpen){closeSearch();return}const empty=stations.findIndex(s=>!s);openSearch(empty<0?0:empty)});
       $('slot').addEventListener('change',fillSlot);
       $('close').addEventListener('click',()=>$('editor').close());
       $('editor').addEventListener('click',e=>{if(e.target===$('editor'))$('editor').close()});
