@@ -18,8 +18,9 @@
     button,input,select{font:inherit}
     button{cursor:pointer}
     button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #e8754d;outline-offset:4px}
-    .theme-row{width:min(510px,calc(100% - 40px));margin:clamp(26px,8vh,76px) auto 24px;display:flex;justify-content:flex-start;align-items:center;gap:10px}
-    .wordmark{width:min(510px,calc(100% - 40px));margin:0 auto 15px;color:#454744;font:700 clamp(27px,5vw,34px)/1 'Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:-.055em}
+    .theme-row{width:min(510px,calc(100% - 40px));margin:clamp(26px,8vh,76px) auto 15px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .wordmark{margin:0;white-space:nowrap;color:#454744;font:700 clamp(21px,3vw,30px)/1 'Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:-.055em}
+    .theme-controls{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-left:auto;flex:none}
     .theme-name{font-size:10px;letter-spacing:.1em;color:#767976;white-space:nowrap}
     .theme-toggle{width:46px;height:25px;padding:2px;border:1px solid #d4d5d2;border-radius:20px;background:#ededeb;box-shadow:inset 0 1px 2px #00000012;display:flex;align-items:center;transition:background .2s}
     .theme-thumb{width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:transform .2s}
@@ -89,7 +90,7 @@
     [data-theme=retro]{font-family:Tahoma,'MS Sans Serif',Arial,sans-serif;background:#008080;color:#000}
     [data-theme=retro] body{min-height:100vh}
     [data-theme=retro] button:focus-visible,[data-theme=retro] input:focus-visible,[data-theme=retro] select:focus-visible{outline:1px dotted #000;outline-offset:-5px}
-    [data-theme=retro] .theme-row{justify-content:flex-start;margin-top:clamp(24px,7vh,68px);margin-bottom:14px;padding:10px 14px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:1px 1px 0 #000}
+    [data-theme=retro] .theme-row{justify-content:flex-end;margin-top:clamp(24px,7vh,68px);margin-bottom:14px;padding:10px 14px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:1px 1px 0 #000}
     [data-theme=retro] .wordmark{display:none}
     [data-theme=retro] .theme-name{font:12px Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;color:#000}
     [data-theme=retro] .theme-toggle{width:48px;height:26px;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;background:#c0c0c0;box-shadow:inset 1px 1px 0 #000}
@@ -145,6 +146,12 @@
       .preset,.preset.empty{width:84px;height:84px}
     }
     @media(max-width:400px){
+      .theme-row{width:calc(100% - 28px);gap:4px}
+      .wordmark{font-size:19px}
+      .theme-controls{gap:5px}
+      .theme-name{font-size:8px;letter-spacing:0}
+      .theme-toggle{width:40px;height:23px}
+      .theme-thumb{width:17px;height:17px}
       .radio{width:calc(100% - 28px);padding:25px 20px 30px}
       .top{gap:15px}
       .display{font-size:11px;letter-spacing:.07em;padding:9px 12px}
@@ -159,11 +166,13 @@
 </head>
 <body>
   <div class="theme-row" role="group" aria-label="Radio appearance">
-    <span class="theme-name">MINIMAL</span>
-    <button class="theme-toggle" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Windows 98 theme"><span class="theme-thumb" aria-hidden="true"></span></button>
-    <span class="theme-name">WINDOWS 98</span>
+    <h1 class="wordmark">Little Radio.</h1>
+    <div class="theme-controls">
+      <span class="theme-name">MINIMAL</span>
+      <button class="theme-toggle" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Windows 98 theme"><span class="theme-thumb" aria-hidden="true"></span></button>
+      <span class="theme-name">WINDOWS 98</span>
+    </div>
   </div>
-  <h1 class="wordmark">Little Radio.</h1>
   <main class="radio" aria-label="Little radio">
     <div class="retro-header" aria-hidden="true"><strong><span class="window-icon">♫</span>Little Radio</strong><span class="window-controls"><i>_</i><i>□</i><i>×</i></span></div>
     <div class="top">
