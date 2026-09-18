@@ -95,12 +95,21 @@
     [data-theme=retro] .theme-name{font:12px Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;color:#000}
     [data-theme=retro] .theme-toggle{width:48px;height:26px;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;background:#c0c0c0;box-shadow:inset 1px 1px 0 #000}
     [data-theme=retro] .theme-thumb{width:20px;height:18px;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:none;transform:translateX(21px)}
-    [data-theme=retro] .radio{width:min(510px,calc(100% - 40px));padding:0 16px 22px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;box-shadow:1px 1px 0 #000,3px 3px 0 #0004}
-    [data-theme=retro] .retro-header{display:flex;align-items:center;justify-content:space-between;height:27px;margin:2px -12px 18px;padding:0 4px 0 7px;background:linear-gradient(90deg,#000080,#1084d0);color:#fff}
+    [data-theme=retro] .radio{position:fixed;z-index:2;top:116px;left:50%;transform:translateX(-50%);width:min(510px,calc(100% - 40px));max-height:calc(100vh - 130px);overflow:auto;padding:0 16px 22px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;box-shadow:1px 1px 0 #000,3px 3px 0 #0004}
+    [data-theme=retro] .radio.maximized{top:0!important;left:0!important;transform:none!important;width:100vw!important;height:100vh;max-height:100vh;border-width:2px;box-shadow:none}
+    [data-theme=retro] .radio.maximized .presets{max-width:510px}
+    [data-theme=retro] .retro-header{display:flex;align-items:center;justify-content:space-between;height:27px;margin:2px -12px 18px;padding:0 4px 0 7px;background:linear-gradient(90deg,#000080,#1084d0);color:#fff;cursor:move;touch-action:none;user-select:none}
     [data-theme=retro] .retro-header strong{font:700 13px Tahoma,'MS Sans Serif',Arial,sans-serif;white-space:nowrap}
     [data-theme=retro] .window-icon{display:inline-grid;place-items:center;width:16px;height:16px;margin-right:4px;background:#c0c0c0;border:1px solid #fff;color:#000080;font-size:12px;vertical-align:-1px}
     [data-theme=retro] .window-controls{display:flex;gap:2px}
-    [data-theme=retro] .window-controls i{display:grid;place-items:center;width:19px;height:19px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;color:#000;font:700 12px Arial,sans-serif;font-style:normal;line-height:1}
+    [data-theme=retro] .window-controls button{display:grid;place-items:center;width:19px;height:19px;padding:0;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;box-shadow:none;color:#000;font:700 12px Arial,sans-serif;line-height:1;cursor:default}
+    [data-theme=retro] .window-controls button:active{border-color:#404040 #fff #fff #404040;padding:1px 0 0 1px}
+    .desktop-folder,.taskbar-button{display:none}
+    [data-theme=retro] .desktop-folder:not([hidden]){position:fixed;left:16px;bottom:17px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:4px;width:82px;padding:4px;border:1px solid transparent;background:transparent;color:#fff;text-shadow:1px 1px #000;text-align:center;font:12px Tahoma,'MS Sans Serif',Arial,sans-serif}
+    [data-theme=retro] .desktop-folder img{width:48px;height:48px;image-rendering:pixelated}
+    [data-theme=retro] .desktop-folder:hover,[data-theme=retro] .desktop-folder:focus-visible{border:1px dotted #fff;background:#00008080}
+    [data-theme=retro] .taskbar-button:not([hidden]){position:fixed;left:8px;bottom:8px;z-index:3;display:flex;align-items:center;gap:5px;min-width:140px;padding:3px 7px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;box-shadow:1px 1px #000;color:#000;text-align:left;font:12px Tahoma,'MS Sans Serif',Arial,sans-serif}
+    [data-theme=retro] .taskbar-button img{width:20px;height:20px;image-rendering:pixelated}
     [data-theme=retro] .top{gap:10px}
     [data-theme=retro] .display{min-height:43px;padding:7px 10px;background:#fff;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;box-shadow:inset 1px 1px 0 #000;color:#000;font:13px/1.25 Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;text-transform:none}
     [data-theme=retro] .display:before{width:7px;height:7px;border-radius:0;background:#808080}
@@ -174,7 +183,7 @@
     </div>
   </div>
   <main class="radio" aria-label="Little radio">
-    <div class="retro-header" aria-hidden="true"><strong><span class="window-icon">♫</span>Little Radio</strong><span class="window-controls"><i>_</i><i>□</i><i>×</i></span></div>
+    <div class="retro-header" id="retro-header"><strong><span class="window-icon" aria-hidden="true">♫</span>Little Radio</strong><span class="window-controls"><button type="button" id="window-minimize" aria-label="Minimize Little Radio" title="Minimize">_</button><button type="button" id="window-maximize" aria-label="Maximize Little Radio" title="Maximize">□</button><button type="button" id="window-close" aria-label="Close Little Radio" title="Close">×</button></span></div>
     <div class="top">
       <div class="display" id="display-box" aria-live="polite"><span id="display">Choose a station</span><input id="search" type="search" placeholder="Search radio stations…" aria-label="Search radio stations" autocomplete="off" hidden></div>
       <button class="add" id="add" aria-label="Add or edit a station" title="Add or edit a station">+</button>
@@ -188,6 +197,8 @@
     <div class="presets" id="presets" aria-label="Six favorite stations"></div>
     <p class="status" id="status" role="status" aria-live="polite"></p>
   </main>
+  <button class="desktop-folder" id="desktop-folder" type="button" aria-label="Open Little Radio" hidden><img src="./folder-closed.png" alt=""><span>little radio</span></button>
+  <button class="taskbar-button" id="taskbar-button" type="button" aria-label="Restore Little Radio" hidden><img src="./folder-open.png" alt=""><span>Little Radio</span></button>
   <dialog id="editor" aria-labelledby="editor-title">
     <form id="form" method="dialog">
       <div class="modal-head"><h1 id="editor-title">Add a station</h1><button class="close" type="button" id="close" aria-label="Close">×</button></div>
@@ -217,8 +228,18 @@
       ];
       const key='little-radio-presets-v3', $=id=>document.getElementById(id);
       const themeKey='little-radio-theme-v1';let retro=false;
+      const windowRadio=document.querySelector('.radio');
+      let windowState='normal',beforeMinimize='normal',windowPosition=null;
       try{retro=localStorage.getItem(themeKey)==='retro'}catch{}
-      function setTheme(){document.documentElement.dataset.theme=retro?'retro':'minimal';$('theme-toggle').setAttribute('aria-checked',String(retro));$('theme-toggle').title=retro?'Switch to minimal radio':'Switch to Windows 98 radio'}
+      function syncWindow(){
+        windowRadio.hidden=retro&&(windowState==='minimized'||windowState==='closed');
+        windowRadio.classList.toggle('maximized',windowState==='maximized');
+        $('desktop-folder').hidden=!(retro&&windowState==='closed');
+        $('taskbar-button').hidden=!(retro&&windowState==='minimized');
+        $('window-maximize').setAttribute('aria-label',windowState==='maximized'?'Restore Little Radio':'Maximize Little Radio');
+        $('window-maximize').title=windowState==='maximized'?'Restore':'Maximize';
+      }
+      function setTheme(){document.documentElement.dataset.theme=retro?'retro':'minimal';$('theme-toggle').setAttribute('aria-checked',String(retro));$('theme-toggle').title=retro?'Switch to minimal radio':'Switch to Windows 98 radio';syncWindow()}
       setTheme();
       $('theme-toggle').addEventListener('click',()=>{retro=!retro;setTheme();render();try{localStorage.setItem(themeKey,retro?'retro':'minimal')}catch{}});
       let stations=defaults;
@@ -228,6 +249,37 @@
       }catch{}
       let selected=-1,playing=false,request=0,searchTimer,searchAbort,searchOpen=false,place=null;
       const audio=$('audio'),list=$('presets');
+      function restoreWindow(){windowState=windowState==='minimized'?beforeMinimize:'normal';syncWindow()}
+      $('desktop-folder').addEventListener('click',()=>{windowState='normal';syncWindow()});
+      $('taskbar-button').addEventListener('click',restoreWindow);
+      $('window-minimize').addEventListener('click',()=>{beforeMinimize=windowState;windowState='minimized';syncWindow()});
+      $('window-maximize').addEventListener('click',()=>{windowState=windowState==='maximized'?'normal':'maximized';syncWindow()});
+      $('window-close').addEventListener('click',()=>{
+        audio.pause();if(searchOpen)closeSearch();if($('editor').open)$('editor').close();
+        windowState='closed';syncWindow();
+      });
+      const titlebar=$('retro-header');let drag=null;
+      titlebar.addEventListener('pointerdown',event=>{
+        if(!retro||windowState!=='normal'||event.target.closest('button'))return;
+        const rect=windowRadio.getBoundingClientRect();
+        drag={id:event.pointerId,offsetX:event.clientX-rect.left,offsetY:event.clientY-rect.top,width:rect.width};
+        titlebar.setPointerCapture(event.pointerId);
+      });
+      titlebar.addEventListener('pointermove',event=>{
+        if(!drag||event.pointerId!==drag.id)return;
+        const left=Math.max(0,Math.min(window.innerWidth-drag.width,event.clientX-drag.offsetX));
+        const top=Math.max(0,Math.min(window.innerHeight-30,event.clientY-drag.offsetY));
+        windowPosition={left,top};windowRadio.style.left=left+'px';windowRadio.style.top=top+'px';windowRadio.style.transform='none';
+      });
+      for(const name of ['pointerup','pointercancel'])titlebar.addEventListener(name,event=>{if(drag?.id===event.pointerId)drag=null});
+      titlebar.addEventListener('dblclick',event=>{if(!event.target.closest('button'))$('window-maximize').click()});
+      window.addEventListener('resize',()=>{
+        if(!windowPosition)return;
+        const rect=windowRadio.getBoundingClientRect();
+        windowPosition.left=Math.max(0,Math.min(windowPosition.left,window.innerWidth-rect.width));
+        windowPosition.top=Math.max(0,Math.min(windowPosition.top,window.innerHeight-30));
+        windowRadio.style.left=windowPosition.left+'px';windowRadio.style.top=windowPosition.top+'px';
+      });
       function persist(){try{localStorage.setItem(key,JSON.stringify(stations))}catch{$('status').textContent='This browser could not save your stations.'}}
       function display(text){$('display').textContent=text}
       function render(){
