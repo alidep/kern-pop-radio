@@ -160,10 +160,10 @@
         if(playing&&selected===i){audio.pause();return}
         const thisRequest=++request;
         if(selected!==i||audio.src!==station.url){audio.pause();audio.src=station.url;audio.load()}
-        selected=i;playing=false;display('Tuning '+station.name+'…');render();
+        selected=i;playing=false;display(station.name);$('status').textContent='Connecting to '+station.name;render();
         try{
           await audio.play();
-          if(thisRequest!==request)return;
+          if(thisRequest!==request||audio.paused)return;
           playing=true;display('Now playing '+station.name);$('status').textContent='Playing '+station.name;render();
           if(station.uuid)fetch('https://de1.api.radio-browser.info/json/url/'+encodeURIComponent(station.uuid),{method:'POST',keepalive:true}).catch(()=>{});
         }catch{
@@ -171,7 +171,12 @@
           playing=false;display('Stream unavailable');$('status').textContent='Could not play '+station.name+'. Check its stream URL.';render();
         }
       }
-      audio.addEventListener('pause',()=>{if(playing){playing=false;display('Paused '+stations[selected].name);render()}});
+      audio.addEventListener('playing',()=>{
+        const station=stations[selected];
+        if(!station||audio.paused)return;
+        playing=true;display('Now playing '+station.name);$('status').textContent='Playing '+station.name;render();
+      });
+      audio.addEventListener('pause',()=>{if(playing){playing=false;display('Paused '+stations[selected].name);$('status').textContent='Paused '+stations[selected].name;render()}});
       audio.addEventListener('error',()=>{if(selected>=0){playing=false;display('Stream unavailable');$('status').textContent='Check the station stream URL.';render()}});
       function searchMessage(message){$('search-results').replaceChildren();const item=document.createElement('div');item.className='search-message';item.textContent=message;$('search-results').append(item)}
       function closeSearch(){
