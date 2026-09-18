@@ -31,8 +31,8 @@
     .playback-control{flex:none;width:18px;height:18px;padding:0;border:0;border-radius:50%;background:transparent;display:grid;place-items:center;cursor:default}
     .playback-control:before{content:'';width:5px;height:5px;border-radius:50%;background:#c9c9c4}
     .playback-control.is-playing:before{background:#e66b40;box-shadow:0 0 0 3px #e66b4020}
-    .playback-control.is-paused{background:#e66b40;cursor:pointer}
-    .playback-control.is-paused:before{width:7px;height:8px;border-radius:0;background:linear-gradient(90deg,#fff 0 33%,transparent 33% 67%,#fff 67% 100%)}
+    .playback-control.is-paused{background:transparent;cursor:pointer}
+    .playback-control.is-paused:before{width:8px;height:10px;border-radius:0;background:linear-gradient(90deg,#e66b40 0 38%,transparent 38% 62%,#e66b40 62% 100%)}
     .display span{overflow:hidden;text-overflow:ellipsis}
     .radio.on-air .display span{font-size:clamp(11px,1.4vw,13px);letter-spacing:.09em}
     .display{cursor:text}
@@ -128,8 +128,7 @@
     [data-theme=retro] .display{min-height:43px;padding:7px 10px;background:#fff;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;box-shadow:inset 1px 1px 0 #000;color:#000;font:13px/1.25 Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;text-transform:none}
     [data-theme=retro] .playback-control:before{width:7px;height:7px;border-radius:0;background:#808080}
     [data-theme=retro] .playback-control.is-playing:before{background:#008000;box-shadow:none}
-    [data-theme=retro] .playback-control.is-paused{border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0}
-    [data-theme=retro] .playback-control.is-paused:before{width:7px;height:8px;background:linear-gradient(90deg,#000 0 33%,transparent 33% 67%,#000 67% 100%)}
+    [data-theme=retro] .playback-control.is-paused:before{width:8px;height:10px;background:linear-gradient(90deg,#e66b40 0 38%,transparent 38% 62%,#e66b40 62% 100%)}
     [data-theme=retro] .radio.on-air .display span{font-size:13px;letter-spacing:0}
     [data-theme=retro] .display input::placeholder{color:#777}
     [data-theme=retro] .add{width:43px;height:43px;padding:0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:1px 1px 0 #000;color:#000;transition:none}
