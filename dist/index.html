@@ -27,7 +27,7 @@
     .radio{width:min(510px,calc(100% - 40px));margin:0 auto;background:#f7f7f9;min-height:0;padding:32px 35px 42px;border:0;border-radius:24px}
     .retro-header{display:none}
     .top{display:flex;align-items:center;gap:24px;position:relative}
-    .display{background:#fff;color:#343835;min-height:54px;min-width:0;flex:1;display:flex;align-items:center;gap:13px;padding:10px 17px;border-radius:4px;border:1px solid #e9e9e9;box-shadow:inset 0 1px 2px #00000009;font:500 clamp(12px,1.7vw,15px)/1.3 'IBM Plex Mono',Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .display{background:#fff;color:#343835;min-height:54px;min-width:0;flex:1;display:flex;align-items:center;gap:13px;padding:10px 17px;border-radius:4px;border:1px solid #e9e9e9;box-shadow:inset 0 1px 2px #00000009;font:500 clamp(11px,1.4vw,13px)/1.3 'IBM Plex Mono',Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .display:before{content:'';width:5px;height:5px;flex:none;border-radius:50%;background:#c9c9c4}
     .radio.on-air .display:before{background:#e66b40;box-shadow:0 0 0 3px #e66b4020}
     .display span{overflow:hidden;text-overflow:ellipsis}
@@ -111,8 +111,9 @@
     [data-theme=retro] .window-controls button{display:grid;place-items:center;width:19px;height:19px;padding:0;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;box-shadow:none;color:#000;font:700 12px Arial,sans-serif;line-height:1;cursor:default}
     [data-theme=retro] .window-controls button:active{border-color:#404040 #fff #fff #404040;padding:1px 0 0 1px}
     .desktop-folder,.taskbar-button{display:none}
-    [data-theme=retro] .desktop-folder:not([hidden]){position:fixed;left:50%;top:460px;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:4px;width:82px;padding:4px;border:1px solid transparent;background:transparent;color:#fff;text-shadow:1px 1px #000;text-align:center;font:12px Tahoma,'MS Sans Serif',Arial,sans-serif}
-    [data-theme=retro] .desktop-folder img{width:48px;height:48px;image-rendering:pixelated}
+    [data-theme=retro] .desktop-folder:not([hidden]){position:fixed;left:50%;top:460px;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:4px;width:82px;padding:4px;border:1px solid transparent;background:transparent;color:#fff;text-shadow:1px 1px #000;text-align:center;font:12px Tahoma,'MS Sans Serif',Arial,sans-serif;cursor:grab;touch-action:none;user-select:none}
+    [data-theme=retro] .desktop-folder:active{cursor:grabbing}
+    [data-theme=retro] .desktop-folder img{width:48px;height:48px;image-rendering:pixelated;pointer-events:none}
     [data-theme=retro] .desktop-folder:hover,[data-theme=retro] .desktop-folder:focus-visible{border:1px dotted #fff;background:#00008080}
     [data-theme=retro] .taskbar-button:not([hidden]){position:fixed;left:8px;bottom:8px;z-index:3;display:flex;align-items:center;gap:5px;min-width:140px;padding:3px 7px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;box-shadow:1px 1px #000;color:#000;text-align:left;font:12px Tahoma,'MS Sans Serif',Arial,sans-serif}
     [data-theme=retro] .taskbar-button img{width:20px;height:20px;image-rendering:pixelated}
@@ -240,6 +241,13 @@
       const themeKey='little-radio-theme-v1';let retro=false;
       const windowRadio=document.querySelector('.radio');
       let windowState='normal',beforeMinimize='normal',windowPosition=null;
+      const folderKey='little-radio-folder-position-v1';let folderPosition=null;
+      try{const saved=JSON.parse(localStorage.getItem(folderKey));if(Number.isFinite(saved?.x)&&Number.isFinite(saved?.y))folderPosition=saved}catch{}
+      function placeFolder(x,y){
+        const position={x:Math.max(41,Math.min(window.innerWidth-41,x)),y:Math.max(0,Math.min(window.innerHeight-86,y))};
+        $('desktop-folder').style.left=position.x+'px';$('desktop-folder').style.top=position.y+'px';
+        return position;
+      }
       try{retro=localStorage.getItem(themeKey)==='retro'}catch{}
       function syncWindow(){
         windowRadio.hidden=retro&&(windowState==='minimized'||windowState==='closed');
@@ -267,15 +275,35 @@
       let selected=-1,playing=false,request=0,searchTimer,searchAbort,searchOpen=false,place=null;
       const audio=$('audio'),list=$('presets');
       function restoreWindow(){windowState=windowState==='minimized'?beforeMinimize:'normal';syncWindow()}
-      $('desktop-folder').addEventListener('click',()=>{windowState='normal';syncWindow()});
+      const folder=$('desktop-folder');let folderDrag=null,folderMoved=false;
+      folder.addEventListener('pointerdown',event=>{
+        if(event.pointerType==='mouse'&&event.button!==0)return;
+        const rect=folder.getBoundingClientRect();
+        folderDrag={id:event.pointerId,startX:event.clientX,startY:event.clientY,x:rect.left+rect.width/2,y:rect.top,moved:false};
+        folderMoved=false;folder.setPointerCapture(event.pointerId);
+      });
+      folder.addEventListener('pointermove',event=>{
+        if(!folderDrag||folderDrag.id!==event.pointerId)return;
+        const dx=event.clientX-folderDrag.startX,dy=event.clientY-folderDrag.startY;
+        if(Math.hypot(dx,dy)>3)folderDrag.moved=true;
+        if(folderDrag.moved)folderPosition=placeFolder(folderDrag.x+dx,folderDrag.y+dy);
+      });
+      for(const name of ['pointerup','pointercancel'])folder.addEventListener(name,event=>{
+        if(!folderDrag||folderDrag.id!==event.pointerId)return;
+        if(folderDrag.moved){folderMoved=true;try{localStorage.setItem(folderKey,JSON.stringify(folderPosition))}catch{}}
+        folderDrag=null;
+      });
+      folder.addEventListener('click',event=>{
+        if(folderMoved){folderMoved=false;event.preventDefault();return}
+        windowState='normal';syncWindow();
+      });
       $('taskbar-button').addEventListener('click',restoreWindow);
       $('window-minimize').addEventListener('click',()=>{beforeMinimize=windowState;windowState='minimized';syncWindow()});
       $('window-maximize').addEventListener('click',()=>{windowState=windowState==='maximized'?'normal':'maximized';syncWindow()});
       $('window-close').addEventListener('click',()=>{
-        const rect=windowRadio.getBoundingClientRect(),folder=$('desktop-folder');
-        const x=Math.max(41,Math.min(window.innerWidth-41,rect.left+rect.width/2));
-        const y=Math.max(0,Math.min(window.innerHeight-86,rect.bottom+16));
-        folder.style.left=x+'px';folder.style.top=y+'px';
+        const rect=windowRadio.getBoundingClientRect();
+        if(folderPosition)folderPosition=placeFolder(folderPosition.x,folderPosition.y);
+        else placeFolder(rect.left+rect.width/2,rect.bottom+16);
         audio.pause();if(searchOpen)closeSearch();if($('editor').open)$('editor').close();
         windowState='closed';syncWindow();
       });
@@ -295,6 +323,7 @@
       for(const name of ['pointerup','pointercancel'])titlebar.addEventListener(name,event=>{if(drag?.id===event.pointerId)drag=null});
       titlebar.addEventListener('dblclick',event=>{if(!event.target.closest('button'))$('window-maximize').click()});
       window.addEventListener('resize',()=>{
+        if(folderPosition)folderPosition=placeFolder(folderPosition.x,folderPosition.y);
         if(!windowPosition)return;
         const rect=windowRadio.getBoundingClientRect();
         windowPosition.left=Math.max(0,Math.min(windowPosition.left,window.innerWidth-rect.width));
