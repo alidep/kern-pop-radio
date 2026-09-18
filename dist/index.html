@@ -18,9 +18,9 @@
     button,input,select{font:inherit}
     button{cursor:pointer}
     button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #e8754d;outline-offset:4px}
-    .radio{width:min(620px,calc(100% - 40px));margin:clamp(50px,12vh,110px) auto 0;background:#f7f7f5;min-height:0;padding:36px 49px 43px;border:1px solid #ebebe8;border-radius:18px;box-shadow:inset 0 1px 0 #fff,0 2px 0 #e7e7e4,0 18px 30px #00000009}
+    .radio{width:min(510px,calc(100% - 40px));margin:clamp(48px,13vh,116px) auto 0;background:#f2f3f4;min-height:0;padding:32px 35px 42px;border:1px solid #e9eaeb;border-radius:24px;box-shadow:inset 0 1px 0 #fff,0 2px 4px #0000000c}
     .top{display:flex;align-items:center;gap:24px;position:relative}
-    .display{background:#f2f2ef;color:#41433f;min-height:56px;min-width:0;flex:1;display:flex;align-items:center;gap:13px;padding:10px 17px;border-radius:3px;border:1px solid #ddddda;box-shadow:inset 0 2px 4px #00000012,0 1px 0 #fff;font:500 clamp(12px,1.7vw,15px)/1.3 'IBM Plex Mono',Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .display{background:#e9ebea;color:#343835;min-height:54px;min-width:0;flex:1;display:flex;align-items:center;gap:13px;padding:10px 17px;border-radius:4px;border:1px solid #d1d4d2;box-shadow:inset 0 2px 4px #0000001c,0 1px 0 #fff;font:500 clamp(12px,1.7vw,15px)/1.3 'IBM Plex Mono',Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .display:before{content:'';width:5px;height:5px;flex:none;border-radius:50%;background:#c9c9c4}
     .radio.on-air .display:before{background:#e66b40;box-shadow:0 0 0 3px #e66b4020}
     .display span{overflow:hidden;text-overflow:ellipsis}
@@ -40,17 +40,18 @@
     .manual{border:0;background:transparent;color:#777b74;font-size:11px;padding:9px 8px 3px;text-decoration:underline;text-underline-offset:3px}
     .add{width:43px;height:43px;flex:none;border:1px solid #d65d34;border-radius:50%;background:linear-gradient(150deg,#f38053,#e9693e);color:#fff;display:grid;place-items:center;font:500 25px/1 Arial,sans-serif;padding:0 0 3px;box-shadow:inset 0 2px 2px #ffffff70,0 2px 0 #b94e2c,1px 4px 5px #0000001f;transition:transform .15s,box-shadow .15s}
     .add:hover{transform:translateY(1px);box-shadow:inset 0 2px 2px #ffffff70,0 1px 0 #b94e2c,1px 2px 3px #0000001f}
-    .presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:35px 31px;max-width:452px;margin:51px auto 0;align-items:start}
+    .presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 27px;max-width:420px;margin:47px auto 0;align-items:start}
     .preset-slot{min-width:0;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative}
     .preset-slot.filled:before{display:none}
-    .preset{position:relative;border:1px solid #f7f7f7;background:radial-gradient(circle at 40% 33%,#fff 3%,#fafafa 36%,#f2f2f1 72%,#e9e9e8 100%);border-radius:50%;width:88px;height:88px;max-width:100%;aspect-ratio:1;display:grid;place-items:center;color:#777;margin-top:0;box-shadow:inset 2px 3px 4px #fff,inset -2px -3px 4px #dededc,0 2px 0 #bcbdb9,2px 4px 3px #00000042,4px 7px 9px #00000016;transition:transform .15s,box-shadow .15s}
-    .preset:after{content:'';position:absolute;width:9px;height:9px;border-radius:50%;left:38px;top:38px;background:#e96c3e}
-    .preset:hover{transform:translateY(2px);box-shadow:inset 2px 3px 4px #fff,inset -2px -3px 4px #dedee1,0 1px 0 #bfc0c2,1px 2px 2px #0000003d,3px 4px 6px #00000014}
-    .preset.playing{background:linear-gradient(145deg,#fff,#efeff1);box-shadow:inset 2px 3px 4px #fff,inset -2px -3px 4px #dedee0,0 1px 0 #bdbdbf,1px 2px 2px #00000038}
+    .preset{position:relative;border:1px solid #d1d4d5;background:#e2e4e5;border-radius:50%;width:92px;height:92px;max-width:100%;aspect-ratio:1;display:grid;place-items:center;color:#777;margin-top:0;box-shadow:1px 2px 0 #a8aaac,3px 5px 3px #00000031,7px 10px 14px #00000019;transition:transform .15s,box-shadow .15s}
+    .preset:before{content:'';position:absolute;inset:2px;border-radius:50%;background:radial-gradient(circle at 40% 32%,#fff 3%,#fafafa 42%,#f3f4f4 73%,#e9eaeb 100%);box-shadow:inset 1px 2px 3px #fff,inset -2px -3px 4px #d9dbdc,0 1px 1px #fff}
+    .preset:after{content:'';position:absolute;z-index:1;width:10px;height:10px;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);background:#e96c3e}
+    .preset:hover{transform:translateY(2px);box-shadow:1px 1px 0 #a8aaac,2px 3px 2px #0000002b,5px 7px 10px #00000012}
+    .preset.playing{transform:translateY(2px);box-shadow:1px 1px 0 #9ea0a2,1px 2px 2px #00000030,3px 4px 6px #00000010}
+    .preset.playing:before{background:radial-gradient(circle at 40% 32%,#fafafa,#e9ebeb)}
     .preset.playing:after{box-shadow:0 0 0 3px #ee704224}
-    .preset.empty{width:88px;height:88px;color:#a9a9a5}
-    .preset.empty:after{content:'+';width:auto;height:auto;position:static;background:none;font-size:20px;font-weight:300;line-height:1}
-    .preset.empty:hover{background:radial-gradient(circle at 42% 34%,#fff,#f1f1f3)}
+    .preset.empty{width:92px;height:92px;color:#a9a9a5}
+    .preset.empty:after{content:'+';width:auto;height:auto;background:none;font-size:21px;font-weight:300;line-height:1}
     .preset-label{display:block;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;text-transform:uppercase;font-size:10px;letter-spacing:.11em;font-weight:500;color:#5f625d}
     button.preset-label{border:0;background:transparent;padding:0;cursor:pointer}
     button.preset-label:hover{color:#ee7042}
@@ -70,11 +71,10 @@
     .remove{background:#eee;color:#555}
     .error{min-height:16px;font-size:12px;color:#a32b2b;margin:0}
     @media(max-width:690px){
-      .radio{padding:31px 30px 37px}
+      .radio{padding:31px 30px 38px}
       .display{min-height:52px}
       .presets{grid-template-columns:repeat(3,1fr);gap:35px 12px;margin-top:47px}
-      .preset,.preset.empty{width:82px;height:82px}
-      .preset:after{left:35px;top:35px}
+      .preset,.preset.empty{width:84px;height:84px}
     }
     @media(max-width:400px){
       .radio{width:calc(100% - 28px);padding:25px 20px 30px}
@@ -82,8 +82,7 @@
       .display{font-size:11px;letter-spacing:.07em;padding:9px 12px}
       .search-popover{width:calc(100% - 58px)}
       .presets{gap:30px 8px;margin-top:40px}
-      .preset,.preset.empty{width:74px;height:74px}
-      .preset:after{left:31px;top:32px}
+      .preset,.preset.empty{width:75px;height:75px}
       .preset-label{font-size:9px;letter-spacing:.06em}
     }
     @media(prefers-reduced-motion:reduce){.preset{transition:none}}
