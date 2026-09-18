@@ -18,7 +18,12 @@
     button,input,select{font:inherit}
     button{cursor:pointer}
     button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #e8754d;outline-offset:4px}
-    .radio{width:min(510px,calc(100% - 40px));margin:clamp(48px,13vh,116px) auto 0;background:#f7f7f9;min-height:0;padding:32px 35px 42px;border:0;border-radius:24px}
+    .theme-row{width:min(510px,calc(100% - 40px));margin:clamp(26px,8vh,76px) auto 14px;display:flex;justify-content:flex-end;align-items:center;gap:10px}
+    .theme-name{font-size:10px;letter-spacing:.1em;color:#767976;white-space:nowrap}
+    .theme-toggle{width:46px;height:25px;padding:2px;border:1px solid #d4d5d2;border-radius:20px;background:#ededeb;box-shadow:inset 0 1px 2px #00000012;display:flex;align-items:center;transition:background .2s}
+    .theme-thumb{width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:transform .2s}
+    .radio{width:min(510px,calc(100% - 40px));margin:0 auto;background:#f7f7f9;min-height:0;padding:32px 35px 42px;border:0;border-radius:24px}
+    .retro-header{display:none}
     .top{display:flex;align-items:center;gap:24px;position:relative}
     .display{background:#fff;color:#343835;min-height:54px;min-width:0;flex:1;display:flex;align-items:center;gap:13px;padding:10px 17px;border-radius:4px;border:1px solid #e9e9e9;box-shadow:inset 0 1px 2px #00000009;font:500 clamp(12px,1.7vw,15px)/1.3 'IBM Plex Mono',Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .display:before{content:'';width:5px;height:5px;flex:none;border-radius:50%;background:#c9c9c4}
@@ -68,6 +73,43 @@
     .save{background:#444744;color:#fff;flex:1}
     .remove{background:#eee;color:#555}
     .error{min-height:16px;font-size:12px;color:#a32b2b;margin:0}
+    [data-theme=retro]{font-family:'Trebuchet MS','Comic Sans MS',sans-serif;background:#dff5ff url('./star-tile.svg') repeat;color:#653d8d}
+    [data-theme=retro] body{min-height:100vh}
+    [data-theme=retro] button:focus-visible,[data-theme=retro] input:focus-visible,[data-theme=retro] select:focus-visible{outline-color:#ef58ad}
+    [data-theme=retro] .theme-row{justify-content:center;margin-top:clamp(22px,6vh,55px);background:#fff9d8;border:2px dashed #b98fd2;border-radius:8px;padding:7px 10px;box-shadow:3px 3px 0 #b7a0cf}
+    [data-theme=retro] .theme-name{font:700 11px 'Trebuchet MS',sans-serif;letter-spacing:.04em;color:#8054a0}
+    [data-theme=retro] .theme-toggle{border:2px solid #a772b7;background:#ffd7eb;box-shadow:inset 1px 1px 2px #b77a9b}
+    [data-theme=retro] .theme-thumb{background:#fff1a3;border:1px solid #b277a9;transform:translateX(20px)}
+    [data-theme=retro] .radio{background:#fffdf3;border:3px solid #9c7ac1;border-radius:13px;padding:0 25px 29px;box-shadow:6px 6px 0 #ad95cc;width:min(560px,calc(100% - 40px))}
+    [data-theme=retro] .retro-header{display:flex;flex-direction:column;align-items:center;gap:1px;background:linear-gradient(90deg,#ffc5e4 0%,#fff0a6 48%,#bceaff 100%);margin:0 -25px 24px;padding:10px 8px 11px;border-bottom:3px solid #9c7ac1;border-radius:9px 9px 0 0;text-align:center}
+    [data-theme=retro] .retro-header strong{font:700 24px 'Comic Sans MS','Trebuchet MS',cursive;color:#6e3f94;text-shadow:1px 1px 0 #fff}
+    [data-theme=retro] .retro-header span{font:700 11px 'Trebuchet MS',sans-serif;letter-spacing:.03em;color:#8555a3}
+    [data-theme=retro] .top{gap:17px}
+    [data-theme=retro] .display{background:#fff;border:2px solid #a88bc3;border-radius:7px;min-height:52px;box-shadow:inset 2px 2px 0 #eee3f4;color:#754695;font:700 clamp(14px,2vw,17px)/1.25 'Trebuchet MS',sans-serif;letter-spacing:0;text-transform:none}
+    [data-theme=retro] .display:before{content:'✦';width:auto;height:auto;background:none;color:#f77ca9;font-size:20px;line-height:1}
+    [data-theme=retro] .radio.on-air .display:before{background:none;box-shadow:none;color:#62b857}
+    [data-theme=retro] .display input::placeholder{color:#9d88ad}
+    [data-theme=retro] .add{background:linear-gradient(#ffe589,#ffb550);border:2px solid #a86a9e;border-radius:11px;color:#864985;box-shadow:inset 2px 2px 0 #fff7cb,3px 3px 0 #bd86b7;font:700 26px/1 'Trebuchet MS',sans-serif}
+    [data-theme=retro] .add:hover{box-shadow:inset 2px 2px 0 #fff7cb,1px 1px 0 #bd86b7}
+    [data-theme=retro] .presets{margin-top:29px;gap:29px 15px}
+    [data-theme=retro] .preset-slot{gap:9px}
+    [data-theme=retro] .preset{--card-a:#fff5ca;--card-b:#ffc7e4;--edge:#b874aa;width:84px;height:84px;border:3px solid var(--edge);border-radius:15px;background:linear-gradient(145deg,var(--card-a),var(--card-b));box-shadow:inset 3px 3px 0 #ffffffa6,inset -3px -3px 0 #8851a726,3px 3px 0 #a17bba;color:#6f4291}
+    [data-theme=retro] .preset-slot:nth-child(2) .preset{--card-a:#defaff;--card-b:#a8ddfb;--edge:#72a2c4}
+    [data-theme=retro] .preset-slot:nth-child(3) .preset{--card-a:#fff9bd;--card-b:#ffdc8f;--edge:#d3a460}
+    [data-theme=retro] .preset-slot:nth-child(4) .preset{--card-a:#ddffd9;--card-b:#b6ebba;--edge:#80b386}
+    [data-theme=retro] .preset-slot:nth-child(5) .preset{--card-a:#f1e4ff;--card-b:#d4b5f5;--edge:#aa83c7}
+    [data-theme=retro] .preset-slot:nth-child(6) .preset{--card-a:#ffe9d7;--card-b:#ffc9bd;--edge:#d49a8f}
+    [data-theme=retro] .preset:after{content:'♪';width:auto;height:auto;background:none;color:#8747a2;font:700 34px/1 'Trebuchet MS',sans-serif}
+    [data-theme=retro] .preset.empty:after{content:'+';font:700 34px/1 'Trebuchet MS',sans-serif}
+    [data-theme=retro] .preset:hover{transform:translateY(1px);box-shadow:inset 3px 3px 0 #ffffffa6,inset -3px -3px 0 #8851a726,2px 2px 0 #a17bba}
+    [data-theme=retro] .preset.playing{transform:translateY(2px);box-shadow:inset 2px 2px 0 #ffffffa6,inset -3px -3px 0 #8851a726,1px 1px 0 #a17bba}
+    [data-theme=retro] .preset.playing:after{content:'♫';box-shadow:none;color:#e84f9e}
+    [data-theme=retro] .preset-label{font:700 11px 'Trebuchet MS',sans-serif;letter-spacing:0;text-transform:none;color:#765296}
+    [data-theme=retro] button.preset-label:hover{color:#dd4fa5}
+    [data-theme=retro] .search-popover{top:60px;width:calc(100% - 60px);border:2px solid #a88bc3;border-radius:8px;box-shadow:4px 4px 0 #b89dcc}
+    [data-theme=retro] .search-result:hover,[data-theme=retro] .search-result:focus-visible{background:#fff5ce}
+    [data-theme=retro] dialog{border:3px solid #a88bc3;background:#fffdf3;box-shadow:6px 6px 0 #b89dcc}
+    [data-theme=retro] .save{background:#e96daa}
     @media(max-width:690px){
       .radio{padding:31px 30px 38px}
       .display{min-height:52px}
@@ -87,7 +129,13 @@
   </style>
 </head>
 <body>
+  <div class="theme-row" role="group" aria-label="Radio appearance">
+    <span class="theme-name">MINIMAL</span>
+    <button class="theme-toggle" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Early web theme"><span class="theme-thumb" aria-hidden="true"></span></button>
+    <span class="theme-name">WEB 2003 <span aria-hidden="true">✦</span></span>
+  </div>
   <main class="radio" aria-label="Little radio">
+    <div class="retro-header" aria-hidden="true"><strong>★ little radio ★</strong><span>your favorite tunes on the internet!</span></div>
     <div class="top">
       <div class="display" id="display-box" aria-live="polite"><span id="display">Choose a station</span><input id="search" type="search" placeholder="Search radio stations…" aria-label="Search radio stations" autocomplete="off" hidden></div>
       <button class="add" id="add" aria-label="Add or edit a station" title="Add or edit a station">+</button>
@@ -128,6 +176,11 @@
         null,null
       ];
       const key='little-radio-presets-v3', $=id=>document.getElementById(id);
+      const themeKey='little-radio-theme-v1';let retro=false;
+      try{retro=localStorage.getItem(themeKey)==='retro'}catch{}
+      function setTheme(){document.documentElement.dataset.theme=retro?'retro':'minimal';$('theme-toggle').setAttribute('aria-checked',String(retro));$('theme-toggle').title=retro?'Switch to minimal radio':'Switch to early web radio'}
+      setTheme();
+      $('theme-toggle').addEventListener('click',()=>{retro=!retro;setTheme();try{localStorage.setItem(themeKey,retro?'retro':'minimal')}catch{}});
       let stations=defaults;
       try{
         const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem('little-radio-presets-v2'));
@@ -160,7 +213,7 @@
         if(playing&&selected===i){audio.pause();return}
         const thisRequest=++request;
         if(selected!==i||audio.src!==station.url){audio.pause();audio.src=station.url;audio.load()}
-        selected=i;playing=false;display(station.name);$('status').textContent='Connecting to '+station.name;render();
+        selected=i;playing=false;display('Tuning '+station.name+'…');$('status').textContent='Connecting to '+station.name;render();
         try{
           await audio.play();
           if(thisRequest!==request||audio.paused)return;
