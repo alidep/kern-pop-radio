@@ -30,9 +30,9 @@
     .display{background:#fff;color:#343835;min-height:54px;min-width:0;flex:1;display:flex;align-items:center;gap:13px;padding:10px 17px;border-radius:4px;border:1px solid #e9e9e9;box-shadow:inset 0 1px 2px #00000009;font:500 clamp(11px,1.4vw,13px)/1.3 'IBM Plex Mono',Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .playback-control{flex:none;width:18px;height:18px;padding:0;border:0;border-radius:50%;background:transparent;display:grid;place-items:center;cursor:default}
     .playback-control:before{content:'';width:5px;height:5px;border-radius:50%;background:#c9c9c4}
-    .playback-control.is-playing,.playback-control.is-paused{background:#e66b40;cursor:pointer}
-    .playback-control.is-playing:before{width:7px;height:8px;border-radius:0;background:linear-gradient(90deg,#fff 0 33%,transparent 33% 67%,#fff 67% 100%)}
-    .playback-control.is-paused:before{width:0;height:0;border-radius:0;background:none;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid #fff;margin-left:2px}
+    .playback-control.is-playing:before{background:#e66b40;box-shadow:0 0 0 3px #e66b4020}
+    .playback-control.is-paused{background:#e66b40;cursor:pointer}
+    .playback-control.is-paused:before{width:7px;height:8px;border-radius:0;background:linear-gradient(90deg,#fff 0 33%,transparent 33% 67%,#fff 67% 100%)}
     .display span{overflow:hidden;text-overflow:ellipsis}
     .radio.on-air .display span{font-size:clamp(11px,1.4vw,13px);letter-spacing:.09em}
     .display{cursor:text}
@@ -127,9 +127,9 @@
     [data-theme=retro] .top{gap:10px}
     [data-theme=retro] .display{min-height:43px;padding:7px 10px;background:#fff;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;box-shadow:inset 1px 1px 0 #000;color:#000;font:13px/1.25 Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;text-transform:none}
     [data-theme=retro] .playback-control:before{width:7px;height:7px;border-radius:0;background:#808080}
-    [data-theme=retro] .playback-control.is-playing,[data-theme=retro] .playback-control.is-paused{border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0}
-    [data-theme=retro] .playback-control.is-playing:before{width:7px;height:8px;background:linear-gradient(90deg,#000 0 33%,transparent 33% 67%,#000 67% 100%)}
-    [data-theme=retro] .playback-control.is-paused:before{width:0;height:0;background:none;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid #000}
+    [data-theme=retro] .playback-control.is-playing:before{background:#008000;box-shadow:none}
+    [data-theme=retro] .playback-control.is-paused{border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0}
+    [data-theme=retro] .playback-control.is-paused:before{width:7px;height:8px;background:linear-gradient(90deg,#000 0 33%,transparent 33% 67%,#000 67% 100%)}
     [data-theme=retro] .radio.on-air .display span{font-size:13px;letter-spacing:0}
     [data-theme=retro] .display input::placeholder{color:#777}
     [data-theme=retro] .add{width:43px;height:43px;padding:0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:1px 1px 0 #000;color:#000;transition:none}
@@ -387,9 +387,9 @@
         const current=stations[selected],canPause=Boolean(current&&playing),canResume=Boolean(current&&paused);
         control.classList.toggle('is-playing',canPause);
         control.classList.toggle('is-paused',canResume);
-        control.disabled=!(canPause||canResume);
-        control.setAttribute('aria-label',canPause?'Pause '+current.name:canResume?'Resume '+current.name:'No station playing');
-        control.title=canPause?'Pause':canResume?'Resume':'';
+        control.disabled=!canResume;
+        control.setAttribute('aria-label',canResume?'Resume '+current.name:canPause?'Playing '+current.name:'No station playing');
+        control.title=canResume?'Resume':'';
         stations.forEach((station,i)=>{
           const active=selected===i;
           const slot=document.createElement('div');slot.className='preset-slot'+(station?' filled':'')+(active&&playing?' current':'');
@@ -495,7 +495,7 @@
         playing=true;paused=false;display('Now playing '+station.name);$('status').textContent='Playing '+station.name;render();
       });
       audio.addEventListener('pause',()=>{if(playing&&stations[selected]){playing=false;paused=true;display('Paused '+stations[selected].name);$('status').textContent='Paused '+stations[selected].name;render()}});
-      $('playback-control').addEventListener('click',event=>{event.stopPropagation();if(stations[selected]&&(playing||paused))tune(selected)});
+      $('playback-control').addEventListener('click',event=>{event.stopPropagation();if(stations[selected]&&paused)tune(selected)});
       audio.addEventListener('error',onPlaybackError);
       function chooseStation(station){
         const i=Number($('search-slot').value),previous=stations[i],samePlaying=playing&&selected===i&&previous?.url===station.url;
