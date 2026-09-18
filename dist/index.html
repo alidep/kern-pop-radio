@@ -479,13 +479,21 @@
         $('search-slot').value=String(i);$('display').hidden=true;$('search').hidden=false;$('search-popover').hidden=false;searchOpen=true;
         $('search').value='';renderSaved();searchMessage('Loading popular stations…');$('search').focus();searchStations();
       }
-      const apiServers=['de1','de2','nl1'];
+      const apiServers=['de1','all','de2'];
       const featuredStations=[
         ['a3dbc189-d23e-4308-803f-5aad26432b8c','NTS Radio'],
         ['7b6aca3d-dfa3-47dd-9f57-820b04c3f339','FIP'],
         ['e9fddd49-3ee2-4597-8574-1b7dbd00aac0','KEXP'],
         ['b8634a5a-6a46-432c-bc01-f1e3a3c4b2bf','Rinse FM'],
         ['960cf833-0601-11e8-ae97-52543be04c81','SomaFM Groove Salad']
+      ];
+      const knownStations=[
+        {name:'93.1 Jack FM',state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'AAC+',url:'https://live.amperwave.net/direct/audacy-kcbsfmaac-imc'},
+        {name:'NTS Radio',codec:'MP3',url:'https://stream-relay-geo.ntslive.net/stream'},
+        {name:'FIP',countrycode:'FR',codec:'MP3',url:'https://icecast.radiofrance.fr/fip-midfi.mp3'},
+        {name:'KEXP',state:'Seattle, Washington',countrycode:'US',codec:'MP3',url:'https://kexp-mp3-128.streamguys1.com/kexp128.mp3'},
+        {name:'Rinse FM',countrycode:'GB',codec:'AAC+',url:'https://admin.stream.rinse.fm/proxy/rinse_uk/stream'},
+        {name:'SomaFM Groove Salad',state:'California',countrycode:'US',codec:'MP3',url:'https://ice2.somafm.com/groovesalad-128-mp3'}
       ];
       const hlsSupported=!!audio.canPlayType('application/vnd.apple.mpegurl')||!!window.Hls?.isSupported();
       const hlsUrl=url=>/\.m3u8?(?:$|[?#])/i.test(url);
@@ -513,15 +521,16 @@
       function relevance(s,q){
         const n=String(s.name||'').trim().toLowerCase(),term=q.trim().toLowerCase();
         if(!term)return 0;
-        if(n===term)return 0;
-        if(n.startsWith(term+' ')||n.startsWith(term+'-'))return 1;
-        if(n.startsWith(term))return 2;
-        if(n.includes(' '+term)||n.includes('| '+term))return 3;
+        const compact=value=>value.replace(/[^a-z0-9]/g,'');
+        if(compact(n)===compact(term))return 0;
+        if(n===term||n.startsWith(term+' ')||n.startsWith(term+'-'))return 1;
+        if(n.startsWith(term)||compact(n).startsWith(compact(term)))return 2;
+        if(n.includes(term)||compact(n).includes(compact(term)))return 3;
         return 4;
       }
       function best(rows,q,limit){
         const seen=new Set(),hosts=new Map(),results=[];
-        const matches=rows.filter(s=>playable(s)&&(!q||relevance(s,q)<4||q.length>3&&String(s.name).toLowerCase().includes(q.toLowerCase())));
+        const matches=rows.filter(s=>playable(s)&&(!q||relevance(s,q)<4));
         matches.sort((a,b)=>relevance(a,q)-relevance(b,q)||popularity(b)-popularity(a));
         for(const s of matches){
           const identity=streamUrl(s).replace(/\/$/,'').toLowerCase();
@@ -562,7 +571,10 @@
       }
       function query(q,order,local){
         const params=new URLSearchParams({hidebroken:'true',is_https:'true',limit:local?'120':'180',order,reverse:'true'});
-        if(q)params.set('name',q);
+        if(q){
+          const simpler=q.replace(/\s*fm\s*$/i,'').replace(/[\d.]+/g,'').trim();
+          params.set('name',simpler.length>=3&&simpler!==q?simpler:q);
+        }
         if(local&&place){params.set('countrycode',place.country);params.set('state',local)}
         return params;
       }
@@ -584,6 +596,15 @@
         renderSaved(q);
         if(q.length===1){searchMessage('Type one more letter.');return}
         const controller=new AbortController();searchAbort=controller;searchMessage(q?'Searching…':'Loading popular stations…');
+        if(q){
+          const immediate=best(knownStations,q,8);
+          if(immediate.length){
+            $('search-results').replaceChildren();
+            const nearby=place?immediate.filter(near):[],other=immediate.filter(s=>!nearby.includes(s));
+            if(nearby.length){heading('Local & regional · '+(place.region||place.country));addResults(nearby)}
+            if(other.length){heading('Known stations');addResults(other)}
+          }
+        }
         const locationAtStart=place;
         const requests=[directory(query(q,'clickcount'),controller.signal),directory(query(q,'votes'),controller.signal)];
         if(!q)requests.push(directory(new URLSearchParams({uuids:featuredStations.map(([uuid])=>uuid).join(',')}),controller.signal,'stations/byuuid'));
@@ -594,20 +615,21 @@
         const responses=await Promise.all(requests);
         if(controller.signal.aborted||!searchOpen||$('search').value.trim()!==q||locationAtStart!==place)return;
         const globalRows=responses.slice(0,2).flatMap(rows=>rows||[]),localRows=responses.slice(q?2:3).flatMap(rows=>rows||[]);
-        if(!responses.some(Array.isArray)){searchMessage('Search is unavailable. Try again or use a stream URL.');return}
+        const directoryAvailable=responses.some(Array.isArray);
         const featured=!q?featuredStations.map(([uuid,label])=>{
           const station=(responses[2]||[]).find(s=>s.stationuuid===uuid);
-          return station&&playable(station)?{...station,displayName:label}:null;
+          return station&&playable(station)?{...station,displayName:label}:knownStations.find(s=>s.name===label);
         }).filter(Boolean):[];
-        const local=place?best([...localRows,...globalRows].filter(near),q,5):[];
+        const known=knownStations.filter(s=>q&&relevance(s,q)<4);
+        const local=place?best([...localRows,...globalRows,...known].filter(near),q,5):[];
         const localUrls=new Set(local.map(streamUrl));
         const featuredUrls=new Set(featured.map(streamUrl));
-        const worldwide=best(globalRows.filter(s=>!localUrls.has(streamUrl(s))&&!featuredUrls.has(streamUrl(s))),q,9);
+        const worldwide=best([...globalRows,...known].filter(s=>!localUrls.has(streamUrl(s))&&!featuredUrls.has(streamUrl(s))),q,9);
         $('search-results').replaceChildren();
         if(local.length){heading('Local & regional · '+(place.region||place.country));addResults(local)}
         if(featured.length){heading('Popular online');addResults(featured)}
         if(worldwide.length){heading(q?'Popular everywhere':'Popular stations');addResults(worldwide)}
-        if(!local.length&&!featured.length&&!worldwide.length)searchMessage('No playable matches. Try a shorter name or use a stream URL.');
+        if(!local.length&&!featured.length&&!worldwide.length)searchMessage(directoryAvailable?'No playable matches. Try a shorter name or use a stream URL.':'Search is temporarily unavailable. Try again or use a stream URL.');
       }
       $('use-location').addEventListener('click',()=>{
         if(!navigator.geolocation){$('location-status').textContent='Location unavailable';return}
