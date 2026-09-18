@@ -31,6 +31,7 @@
     .display:before{content:'';width:5px;height:5px;flex:none;border-radius:50%;background:#c9c9c4}
     .radio.on-air .display:before{background:#e66b40;box-shadow:0 0 0 3px #e66b4020}
     .display span{overflow:hidden;text-overflow:ellipsis}
+    .radio.on-air .display span{font-size:clamp(11px,1.4vw,13px);letter-spacing:.09em}
     .display{cursor:text}
     .display input{border:0;background:transparent;min-width:0;width:100%;font:inherit;color:inherit;outline:0;padding:0;margin:0}
     .display input::placeholder{color:#777b74}
@@ -43,6 +44,11 @@
     .location-button:hover{text-decoration:underline;text-underline-offset:2px}
     .location-status{font-size:10px;color:#92958e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .search-results{display:flex;flex-direction:column;gap:2px;padding-top:4px}
+    .saved-section{border-bottom:1px solid #ededeb;padding-bottom:7px}
+    .saved-row{display:flex;align-items:center;gap:2px}
+    .saved-row .search-result{min-width:0;flex:1}
+    .saved-forget{flex:none;width:28px;height:28px;border:0;border-radius:4px;background:transparent;color:#9b9d99;font-size:18px;line-height:1}
+    .saved-forget:hover{background:#f4f4f1;color:#333}
     .result-heading{padding:10px 8px 4px;color:#92958e;font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase}
     .search-result{border:0;border-radius:4px;background:#fff;padding:10px 8px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:12px;color:#292b28;width:100%}
     .search-result:hover,.search-result:focus-visible{background:#f4f4f1}
@@ -114,6 +120,7 @@
     [data-theme=retro] .display{min-height:43px;padding:7px 10px;background:#fff;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;box-shadow:inset 1px 1px 0 #000;color:#000;font:13px/1.25 Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;text-transform:none}
     [data-theme=retro] .display:before{width:7px;height:7px;border-radius:0;background:#808080}
     [data-theme=retro] .radio.on-air .display:before{background:#008000;box-shadow:none}
+    [data-theme=retro] .radio.on-air .display span{font-size:13px;letter-spacing:0}
     [data-theme=retro] .display input::placeholder{color:#777}
     [data-theme=retro] .add{width:43px;height:43px;padding:0 0 3px;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:1px 1px 0 #000;color:#000;font:26px/1 Tahoma,Arial,sans-serif;transition:none}
     [data-theme=retro] .add:hover{transform:none;box-shadow:1px 1px 0 #000;background:#d0d0d0}
@@ -143,6 +150,8 @@
     [data-theme=retro] .search-result{border-radius:0;font:12px Tahoma,Arial,sans-serif}
     [data-theme=retro] .search-result:hover,[data-theme=retro] .search-result:focus-visible{background:#000080;color:#fff}
     [data-theme=retro] .search-result:hover .result-meta,[data-theme=retro] .search-result:focus-visible .result-meta{color:#fff}
+    [data-theme=retro] .saved-section{border-bottom-color:#808080}
+    [data-theme=retro] .saved-forget{border-radius:0;color:#404040}
     [data-theme=retro] .manual{color:#000080}
     [data-theme=retro] dialog{border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:3px 3px 0 #000;color:#000}
     [data-theme=retro] dialog h1{font:700 18px Tahoma,Arial,sans-serif;letter-spacing:0}
@@ -189,9 +198,10 @@
       <button class="add" id="add" aria-label="Add or edit a station" title="Add or edit a station">+</button>
       <div class="search-popover" id="search-popover" hidden>
         <div class="search-top"><span>Save to preset</span><select id="search-slot" aria-label="Preset to save station"></select></div>
-        <div class="location-row"><button class="location-button" id="use-location" type="button" title="Share your location to find nearby stations">⌖ Find local stations</button><span class="location-status" id="location-status" aria-live="polite"></span></div>
-        <div class="search-results" id="search-results"><div class="search-message">Loading popular stations…</div></div>
         <button class="manual" id="manual" type="button">Use a stream URL instead</button>
+        <div class="location-row"><button class="location-button" id="use-location" type="button" title="Share your location to find nearby stations">⌖ Find local stations</button><span class="location-status" id="location-status" aria-live="polite"></span></div>
+        <div class="saved-section" id="saved-section" hidden><div class="result-heading">Saved stations</div><div id="saved-results"></div></div>
+        <div class="search-results" id="search-results"><div class="search-message">Loading popular stations…</div></div>
       </div>
     </div>
     <div class="presets" id="presets" aria-label="Six favorite stations"></div>
@@ -247,6 +257,13 @@
         const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem('little-radio-presets-v2'));
         if(Array.isArray(saved)&&saved.length===6)stations=saved.map(s=>s&&typeof s.name==='string'&&typeof s.url==='string'?{name:s.name,url:s.url,uuid:typeof s.uuid==='string'?s.uuid:''}:null);
       }catch{}
+      const savedKey='little-radio-saved-v1';let savedStations=[];
+      try{
+        const stored=localStorage.getItem(savedKey);
+        const rows=stored===null?(localStorage.getItem(key)||localStorage.getItem('little-radio-presets-v2')?stations.filter(Boolean):[]):JSON.parse(stored);
+        if(Array.isArray(rows))savedStations=rows.filter(s=>s&&typeof s.name==='string'&&typeof s.url==='string'&&s.url.startsWith('https://')).map(s=>({name:s.name,url:s.url,uuid:typeof s.uuid==='string'?s.uuid:''})).slice(0,50);
+        if(stored===null)localStorage.setItem(savedKey,JSON.stringify(savedStations));
+      }catch{}
       let selected=-1,playing=false,request=0,searchTimer,searchAbort,searchOpen=false,place=null;
       const audio=$('audio'),list=$('presets');
       function restoreWindow(){windowState=windowState==='minimized'?beforeMinimize:'normal';syncWindow()}
@@ -285,6 +302,11 @@
         windowRadio.style.left=windowPosition.left+'px';windowRadio.style.top=windowPosition.top+'px';
       });
       function persist(){try{localStorage.setItem(key,JSON.stringify(stations))}catch{$('status').textContent='This browser could not save your stations.'}}
+      function persistSaved(){try{localStorage.setItem(savedKey,JSON.stringify(savedStations))}catch{$('status').textContent='This browser could not save your stations.'}}
+      function rememberStation(station){
+        savedStations=[{name:station.name,url:station.url,uuid:station.uuid||''},...savedStations.filter(s=>s.url!==station.url)].slice(0,50);
+        persistSaved();
+      }
       function display(text){$('display').textContent=text}
       function render(){
         list.replaceChildren();
@@ -333,6 +355,26 @@
       });
       audio.addEventListener('pause',()=>{if(playing){playing=false;display('Paused '+stations[selected].name);$('status').textContent='Paused '+stations[selected].name;render()}});
       audio.addEventListener('error',()=>{if(selected>=0){playing=false;display('Stream unavailable');$('status').textContent='Check the station stream URL.';render()}});
+      function chooseStation(station){
+        const i=Number($('search-slot').value),previous=stations[i],samePlaying=playing&&selected===i&&previous?.url===station.url;
+        if(i===selected&&previous?.url!==station.url){++request;audio.pause();audio.removeAttribute('src');audio.load();playing=false;selected=-1}
+        stations[i]={name:station.name,url:station.url,uuid:station.uuid||''};persist();rememberStation(stations[i]);closeSearch();
+        if(samePlaying){display('Now playing '+station.name);render()}
+        else{render();tune(i)}
+      }
+      function renderSaved(q=''){
+        const rows=savedStations.filter(s=>s.name.toLowerCase().includes(q.toLowerCase())).slice(0,12),target=$('saved-results');
+        $('saved-section').hidden=!rows.length;target.replaceChildren();
+        rows.forEach(station=>{
+          const row=document.createElement('div');row.className='saved-row';
+          const choose=document.createElement('button');choose.type='button';choose.className='search-result';choose.setAttribute('aria-label','Add '+station.name+' to selected preset');
+          const name=document.createElement('span');name.className='result-name';name.textContent=station.name;
+          choose.append(name);choose.addEventListener('click',()=>chooseStation(station));
+          const forget=document.createElement('button');forget.type='button';forget.className='saved-forget';forget.textContent='×';forget.title='Forget '+station.name;forget.setAttribute('aria-label','Forget '+station.name);
+          forget.addEventListener('click',()=>{savedStations=savedStations.filter(s=>s.url!==station.url);persistSaved();renderSaved($('search').value.trim())});
+          row.append(choose,forget);target.append(row);
+        });
+      }
       function searchMessage(message){$('search-results').replaceChildren();const item=document.createElement('div');item.className='search-message';item.textContent=message;$('search-results').append(item)}
       function closeSearch(){
         searchOpen=false;clearTimeout(searchTimer);searchAbort?.abort();
@@ -343,7 +385,7 @@
         $('search-slot').replaceChildren();
         stations.forEach((s,index)=>{const option=document.createElement('option');option.value=index;option.textContent=String(index+1).padStart(2,'0')+(s?' · '+s.name:' · Empty');$('search-slot').append(option)});
         $('search-slot').value=String(i);$('display').hidden=true;$('search').hidden=false;$('search-popover').hidden=false;searchOpen=true;
-        $('search').value='';searchMessage('Loading popular stations…');$('search').focus();searchStations();
+        $('search').value='';renderSaved();searchMessage('Loading popular stations…');$('search').focus();searchStations();
       }
       const apiServers=['de1','de2','nl1'];
       const streamUrl=s=>String(s.url_resolved||s.url||'');
@@ -398,15 +440,14 @@
           const meta=document.createElement('span');meta.className='result-meta';meta.textContent=[s.state||s.countrycode,s.codec].filter(Boolean).join(' · ');
           button.append(name,meta);
           button.addEventListener('click',()=>{
-            const i=Number($('search-slot').value),url=String(s.url_resolved||s.url),label=String(s.name).trim();
-            if(i===selected&&stations[i]?.url!==url){++request;audio.pause();audio.removeAttribute('src');audio.load();playing=false;selected=-1}
-            stations[i]={name:label,url,uuid:String(s.stationuuid||'')};persist();render();closeSearch();tune(i);
+            chooseStation({name:String(s.name).trim(),url:String(s.url_resolved||s.url),uuid:String(s.stationuuid||'')});
           });
           $('search-results').append(button);
         });
       }
       async function searchStations(){
         const q=$('search').value.trim();searchAbort?.abort();
+        renderSaved(q);
         if(q.length===1){searchMessage('Type one more letter.');return}
         const controller=new AbortController();searchAbort=controller;searchMessage(q?'Searching…':'Loading popular stations…');
         const locationAtStart=place;
@@ -447,7 +488,7 @@
         },()=>{$('location-status').textContent='Location not shared';$('use-location').disabled=false},{enableHighAccuracy:false,maximumAge:900000,timeout:10000});
       });
       $('search').addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(searchStations,260)});
-      $('search').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeSearch()}if(e.key==='Enter'){e.preventDefault();$('search-results').querySelector('button')?.click()}});
+      $('search').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeSearch()}if(e.key==='Enter'){e.preventDefault();($('saved-results').querySelector('.search-result')||$('search-results').querySelector('button'))?.click()}});
       $('display-box').addEventListener('click',()=>{if(!searchOpen){const empty=stations.findIndex(s=>!s);openSearch(empty<0?0:empty)}});
       $('manual').addEventListener('click',()=>{const i=Number($('search-slot').value);closeSearch();openEditor(i)});
       document.addEventListener('keydown',e=>{if(searchOpen||$('editor').open||e.metaKey||e.ctrlKey||e.altKey||e.key.length!==1||e.target.closest('input,select,textarea'))return;e.preventDefault();const empty=stations.findIndex(s=>!s);openSearch(empty<0?0:empty);$('search').value=e.key;clearTimeout(searchTimer);searchTimer=setTimeout(searchStations,260)});
@@ -472,7 +513,7 @@
         try{parsed=new URL(url)}catch{}
         if(!name||!parsed||parsed.protocol!=='https:'||/\.(m3u8?|pls)(?:[?#]|$)/i.test(parsed.pathname)){$('error').textContent='Enter a name and direct HTTPS audio stream URL.';return}
         if(i===selected&&stations[i]?.url!==url){++request;audio.pause();audio.removeAttribute('src');audio.load();playing=false;selected=-1}
-        stations[i]={name,url};persist();render();$('editor').close();$('status').textContent='Preset '+(i+1)+' saved. Tap its circle to listen.';
+        stations[i]={name,url};persist();rememberStation(stations[i]);render();$('editor').close();$('status').textContent='Preset '+(i+1)+' saved. Tap its circle to listen.';
       });
       $('remove').addEventListener('click',()=>{
         const i=Number($('slot').value);
@@ -490,7 +531,7 @@
             try{parsed=new URL(url)}catch{}
             if(!Number.isInteger(i)||i<0||i>5||!name||name.length>45||!parsed||parsed.protocol!=='https:'||/\.(m3u8?|pls)(?:[?#]|$)/i.test(parsed.pathname))throw Error('Choose preset 1–6, a name, and a direct HTTPS audio stream URL.');
             if(i===selected&&stations[i]?.url!==url){++request;audio.pause();audio.removeAttribute('src');audio.load();playing=false;selected=-1}
-            stations[i]={name,url};persist();render();$('status').textContent='Preset '+(i+1)+' saved.';return {preset:i+1,name,saved:true};
+            stations[i]={name,url};persist();rememberStation(stations[i]);render();$('status').textContent='Preset '+(i+1)+' saved.';return {preset:i+1,name,saved:true};
           }
         })).catch(()=>{})}catch{}
       }
