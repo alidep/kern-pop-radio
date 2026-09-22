@@ -21,9 +21,8 @@
     .theme-row{width:min(510px,calc(100% - 40px));margin:clamp(26px,8vh,76px) auto 15px;display:flex;justify-content:space-between;align-items:center;gap:12px}
     .wordmark{margin:0;white-space:nowrap;color:#454744;font:700 clamp(19px,2.8vw,28px)/1 'Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:-.055em}
     .theme-controls{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-left:auto;flex:none}
-    .theme-name{font-size:10px;letter-spacing:.1em;color:#767976;white-space:nowrap}
-    .theme-toggle{width:46px;height:25px;padding:2px;border:1px solid #d4d5d2;border-radius:20px;background:#ededeb;box-shadow:inset 0 1px 2px #00000012;display:flex;align-items:center;transition:background .2s}
-    .theme-thumb{width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:transform .2s}
+    .theme-label{font-size:9px;letter-spacing:.12em;color:#8a8c88;text-transform:uppercase}
+    .theme-select{width:auto;min-width:152px;margin:0;padding:8px 30px 8px 11px;border:1px solid #dedfdb;border-radius:7px;background:#fff;color:#4e514d;font:600 10px 'IBM Plex Mono',Menlo,monospace;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 1px 2px #0000000c}
     .radio{width:min(510px,calc(100% - 40px));margin:0 auto;background:#f7f7f9;min-height:0;padding:32px 35px 42px;border:0;border-radius:24px}
     .retro-header{display:none}
     .top{display:flex;align-items:center;gap:24px;position:relative}
@@ -105,9 +104,8 @@
     [data-theme=retro] button:focus-visible,[data-theme=retro] input:focus-visible,[data-theme=retro] select:focus-visible{outline:1px dotted #000;outline-offset:-5px}
     [data-theme=retro] .theme-row{justify-content:flex-end;margin-top:clamp(24px,7vh,68px);margin-bottom:14px;padding:10px 14px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:1px 1px 0 #000}
     [data-theme=retro] .wordmark{display:none}
-    [data-theme=retro] .theme-name{font:12px Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;color:#000}
-    [data-theme=retro] .theme-toggle{width:48px;height:26px;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;background:#c0c0c0;box-shadow:inset 1px 1px 0 #000}
-    [data-theme=retro] .theme-thumb{width:20px;height:18px;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:none;transform:translateX(21px)}
+    [data-theme=retro] .theme-label{font:11px Tahoma,'MS Sans Serif',Arial,sans-serif;letter-spacing:0;color:#000}
+    [data-theme=retro] .theme-select{min-width:165px;margin:0;padding:5px;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;background:#fff;color:#000;box-shadow:inset 1px 1px 0 #000;font:12px Tahoma,'MS Sans Serif',Arial,sans-serif;text-transform:none}
     [data-theme=retro] .radio{position:fixed;z-index:2;top:116px;left:50%;transform:translateX(-50%);width:min(510px,calc(100% - 40px));max-height:calc(100vh - 130px);overflow:auto;padding:0 16px 22px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;box-shadow:1px 1px 0 #000,3px 3px 0 #0004}
     [data-theme=retro] .radio.maximized{top:0!important;left:0!important;transform:none!important;width:100vw!important;height:100vh;max-height:100vh;border-width:2px;box-shadow:none}
     [data-theme=retro] .radio.maximized .presets{max-width:510px}
@@ -167,6 +165,41 @@
     [data-theme=retro] dialog h1{font:700 18px Tahoma,Arial,sans-serif;letter-spacing:0}
     [data-theme=retro] dialog input,[data-theme=retro] dialog select{border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;box-shadow:inset 1px 1px 0 #000;font:13px Tahoma,Arial,sans-serif}
     [data-theme=retro] .save,[data-theme=retro] .remove{border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;color:#000;box-shadow:1px 1px 0 #000;font:13px Tahoma,Arial,sans-serif}
+    [data-theme=mustang]{background:#171613;color:#eee9dc}
+    [data-theme=mustang] body{min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#504739 0,#24211b 42%,#111 100%)}
+    [data-theme=mustang] .theme-row{margin-bottom:18px}
+    [data-theme=mustang] .wordmark{color:#e3ded0;font-family:Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.04em;text-shadow:0 1px #000}
+    [data-theme=mustang] .theme-label{color:#a9a292}
+    [data-theme=mustang] .theme-select{border-color:#5b554b;background:#24231f;color:#e2d8bd;box-shadow:inset 0 1px #ffffff12,0 1px 2px #000;font-family:Arial,sans-serif}
+    [data-theme=mustang] .radio{position:relative;padding:38px 42px 37px;border:2px solid #77736a;border-radius:9px;background:linear-gradient(100deg,#201f1c,#34312a 48%,#1a1916);box-shadow:inset 0 0 0 5px #0c0c0b,inset 0 0 0 7px #777269,0 20px 45px #0008}
+    [data-theme=mustang] .radio:before{content:'MUSTANG';position:absolute;left:50%;top:12px;transform:translateX(-50%);color:#cfc6ad;font:italic 700 11px Georgia,serif;letter-spacing:.18em;text-shadow:0 1px #000}
+    [data-theme=mustang] .radio:after{content:'';position:absolute;left:42px;top:38px;width:44px;height:44px;border:2px solid #b7b0a1;border-radius:50%;background:radial-gradient(circle at 36% 30%,#ded9ce,#928c81 54%,#4c4943 76%);box-shadow:inset 0 1px 1px #fff8,0 3px 0 #37342e,0 5px 8px #0008}
+    [data-theme=mustang] .top{gap:14px;margin-left:58px}
+    [data-theme=mustang] .display{min-height:48px;border:2px solid #090908;border-radius:2px;background:linear-gradient(#18150d,#2e260f);color:#e7aa43;box-shadow:inset 0 0 10px #000,inset 0 0 0 1px #7e6a37;font-family:'IBM Plex Mono',monospace;letter-spacing:.07em;text-shadow:0 0 5px #d99020aa}
+    [data-theme=mustang] .playback-control:before{background:#796f55}
+    [data-theme=mustang] .playback-control.is-playing:before{background:#e7aa43;box-shadow:0 0 5px #e7aa43}
+    [data-theme=mustang] .playback-control.is-paused:before{background:linear-gradient(90deg,#e7aa43 0 38%,transparent 38% 62%,#e7aa43 62% 100%)}
+    [data-theme=mustang] .add{width:48px;height:48px;border:2px solid #b7b0a1;border-radius:50%;background:radial-gradient(circle at 36% 30%,#ded9ce,#928c81 54%,#4c4943 76%);color:#191815;box-shadow:inset 0 1px 1px #fff8,0 3px 0 #37342e,0 5px 8px #0008}
+    [data-theme=mustang] .presets{max-width:390px;margin-top:34px;gap:27px 16px}
+    [data-theme=mustang] .preset-slot{gap:9px}
+    [data-theme=mustang] .preset,[data-theme=mustang] .preset.empty{width:104px;height:48px;aspect-ratio:auto;border:2px solid #a8a194;border-radius:3px;background:linear-gradient(#dad4c7 0 44%,#a69f91 48% 100%);box-shadow:inset 0 2px #fff7,inset 0 -2px #615d55,0 4px 0 #33302a,0 7px 9px #0008;color:#2a2823;transform:none}
+    [data-theme=mustang] .preset:after{width:6px;height:6px;background:#27251f;box-shadow:none}
+    [data-theme=mustang] .preset:hover{transform:translateY(1px);box-shadow:inset 0 2px #fff7,inset 0 -2px #615d55,0 3px 0 #33302a,0 5px 7px #0008}
+    [data-theme=mustang] .preset.playing{transform:translateY(4px);border-color:#777168;background:linear-gradient(#8f897e,#beb7aa);box-shadow:inset 0 3px 5px #0007,0 1px #3b3831}
+    [data-theme=mustang] .preset.playing:after{background:#e7aa43;box-shadow:0 0 6px #e7aa43}
+    [data-theme=mustang] .preset.playing .level-ring{display:none}
+    [data-theme=mustang] .preset.empty:after{color:#302e29;font:700 18px Arial,sans-serif}
+    [data-theme=mustang] .preset-label{color:#c9c1ad;font:700 9px Arial,sans-serif;letter-spacing:.13em;text-shadow:0 1px #000}
+    [data-theme=mustang] button.preset-label:hover{color:#e7aa43}
+    [data-theme=mustang] .search-popover{background:#24221d;border-color:#777166;color:#e9e1cf;box-shadow:0 14px 30px #000a}
+    [data-theme=mustang] .search-top,[data-theme=mustang] .result-heading{color:#bdb39d;border-color:#4d4940}
+    [data-theme=mustang] .search-top select,[data-theme=mustang] .search-result{background:#302d27;color:#eee5d1}
+    [data-theme=mustang] .search-result:hover,[data-theme=mustang] .search-result:focus-visible{background:#473d2b}
+    [data-theme=mustang] .result-meta,[data-theme=mustang] .search-message,[data-theme=mustang] .location-status{color:#a9a18f}
+    [data-theme=mustang] .manual,[data-theme=mustang] .location-button{color:#e7aa43}
+    [data-theme=mustang] dialog{background:#27251f;color:#eee6d3;border-color:#797267}
+    [data-theme=mustang] dialog input,[data-theme=mustang] dialog select{background:#171612;color:#eee6d3;border-color:#625d53}
+    [data-theme=mustang] .save{background:#b07a2d;color:#16130d}
     @media(max-width:690px){
       .radio{padding:31px 30px 38px}
       .display{min-height:52px}
@@ -178,8 +211,8 @@
       .theme-row{width:calc(100% - 24px);margin:20px auto 14px;display:grid;grid-template-columns:1fr;gap:12px}
       .wordmark{font-size:clamp(23px,6.2vw,28px)}
       .theme-controls{margin-left:0;justify-self:end;gap:8px}
-      .theme-name{font-size:9px;letter-spacing:.04em}
-      .theme-toggle{width:46px;height:25px}
+      .theme-label{display:none}
+      .theme-select{min-width:150px;min-height:40px;font-size:10px}
       .radio{width:calc(100% - 24px);padding:22px 16px 29px;border-radius:20px}
       .top{gap:12px}
       .display{min-height:50px;padding:10px 12px;font-size:11px;letter-spacing:.06em}
@@ -204,7 +237,7 @@
       [data-theme=retro] .theme-row{display:flex;justify-content:flex-end;margin-top:18px;min-height:50px;padding:8px}
       [data-theme=retro] .radio{position:relative;top:auto!important;left:auto!important;transform:none!important;width:calc(100% - 24px);max-height:none;overflow:visible;padding:0 10px 20px}
       [data-theme=retro] .radio.maximized{position:fixed;overflow:auto}
-      [data-theme=retro] .theme-toggle{height:26px}
+      [data-theme=retro] .theme-select{min-height:34px}
       [data-theme=retro] .retro-header{height:48px;margin:2px -6px 14px;padding:0 5px;cursor:default;touch-action:auto}
       [data-theme=retro] .retro-header strong{font-size:12px;overflow:hidden;text-overflow:ellipsis}
       [data-theme=retro] .window-controls{flex:none}
@@ -219,6 +252,12 @@
       [data-theme=retro] .search-top select{font:16px Tahoma,Arial,sans-serif}
       [data-theme=retro] .search-result{font-size:13px}
       [data-theme=retro] .taskbar-button:not([hidden]){min-height:44px}
+      [data-theme=mustang] .theme-row{display:flex}
+      [data-theme=mustang] .radio{padding:38px 18px 30px}
+      [data-theme=mustang] .radio:after{left:18px;width:42px;height:42px}
+      [data-theme=mustang] .top{margin-left:54px}
+      [data-theme=mustang] .presets{grid-template-columns:repeat(2,minmax(0,1fr));max-width:280px;gap:28px 12px}
+      [data-theme=mustang] .preset,[data-theme=mustang] .preset.empty{width:min(108px,100%);height:48px}
     }
     @media(prefers-reduced-motion:reduce){.preset{transition:none}.level-ring .fill{animation:none;stroke-dasharray:55 100}}
   </style>
@@ -227,9 +266,12 @@
   <div class="theme-row" role="group" aria-label="Radio appearance">
     <h1 class="wordmark">Kern Pop Radio</h1>
     <div class="theme-controls">
-      <span class="theme-name">MINIMAL</span>
-      <button class="theme-toggle" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Windows 98 theme"><span class="theme-thumb" aria-hidden="true"></span></button>
-      <span class="theme-name">WINDOWS 98</span>
+      <label class="theme-label" for="theme-select">Style</label>
+      <select class="theme-select" id="theme-select" aria-label="Radio style">
+        <option value="minimal">Braun minimal</option>
+        <option value="retro">Windows 98</option>
+        <option value="mustang">1970 Mustang</option>
+      </select>
     </div>
   </div>
   <main class="radio" aria-label="Kern Pop Radio">
@@ -279,7 +321,7 @@
         null,null
       ];
       const key='little-radio-presets-v3', $=id=>document.getElementById(id);
-      const themeKey='little-radio-theme-v1';let retro=false;
+      const themeKey='little-radio-theme-v1';let theme='minimal',retro=false;
       const windowRadio=document.querySelector('.radio');
       let windowState='normal',beforeMinimize='normal',windowPosition=null;
       const folderKey='little-radio-folder-position-v1';let folderPosition=null;
@@ -289,7 +331,8 @@
         $('desktop-folder').style.left=position.x+'px';$('desktop-folder').style.top=position.y+'px';
         return position;
       }
-      try{retro=localStorage.getItem(themeKey)==='retro'}catch{}
+      try{const savedTheme=localStorage.getItem(themeKey);if(['minimal','retro','mustang'].includes(savedTheme))theme=savedTheme}catch{}
+      retro=theme==='retro';
       function syncWindow(){
         windowRadio.hidden=retro&&(windowState==='minimized'||windowState==='closed');
         windowRadio.classList.toggle('maximized',windowState==='maximized');
@@ -298,9 +341,9 @@
         $('window-maximize').setAttribute('aria-label',windowState==='maximized'?'Restore Kern Pop Radio':'Maximize Kern Pop Radio');
         $('window-maximize').title=windowState==='maximized'?'Restore':'Maximize';
       }
-      function setTheme(){document.documentElement.dataset.theme=retro?'retro':'minimal';$('theme-toggle').setAttribute('aria-checked',String(retro));$('theme-toggle').title=retro?'Switch to minimal radio':'Switch to Windows 98 radio';syncWindow()}
+      function setTheme(){retro=theme==='retro';document.documentElement.dataset.theme=theme;$('theme-select').value=theme;syncWindow()}
       setTheme();
-      $('theme-toggle').addEventListener('click',()=>{retro=!retro;setTheme();render();try{localStorage.setItem(themeKey,retro?'retro':'minimal')}catch{}});
+      $('theme-select').addEventListener('change',event=>{theme=event.target.value;setTheme();render();try{localStorage.setItem(themeKey,theme)}catch{}});
       let stations=defaults;
       try{
         const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem('little-radio-presets-v2'));
