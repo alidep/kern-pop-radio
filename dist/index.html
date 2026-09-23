@@ -213,6 +213,52 @@
     [data-theme=mustang] dialog{background:#27251f;color:#eee6d3;border-color:#797267}
     [data-theme=mustang] dialog input,[data-theme=mustang] dialog select{background:#171612;color:#eee6d3;border-color:#625d53}
     [data-theme=mustang] .save{background:#b07a2d;color:#16130d}
+    [data-theme=continental]{background:#ecebe8;color:#e7e7e4}
+    [data-theme=continental] body{min-height:100vh;background:radial-gradient(circle at 50% 15%,#fff 0,#e9e8e5 45%,#d7d6d2 100%)}
+    [data-theme=continental] .theme-row{width:min(620px,calc(100% - 40px));margin-bottom:18px}
+    [data-theme=continental] .wordmark{color:#272928;font-family:Arial,sans-serif;font-style:normal;font-weight:800;letter-spacing:-.055em}
+    [data-theme=continental] .theme-label{color:#626460}
+    [data-theme=continental] .theme-select{border-color:#b8bab7;background:#202322;color:#f0a43b;box-shadow:inset 0 1px #ffffff1c,0 2px 4px #0002;font-family:Arial,sans-serif}
+    [data-theme=continental] .radio{position:relative;width:min(620px,calc(100% - 40px));padding:50px 25px 22px;border:2px solid #090a0a;border-radius:13px;background:linear-gradient(#292d2d,#151818);box-shadow:inset 0 0 0 2px #3d4140,inset 0 -8px 15px #0006,0 14px 30px #0004}
+    [data-theme=continental] .radio:before{content:'CONTINENTAL     SRC     BAND     SEL     DISP        ◀        ▶';position:absolute;left:24px;right:24px;top:11px;height:30px;padding:0 13px;border:1px solid #080909;background:linear-gradient(#323636,#202323);color:#f3a43b;box-shadow:inset 0 1px #ffffff1a;display:flex;align-items:center;justify-content:center;font:700 9px Arial,sans-serif;letter-spacing:.12em;word-spacing:14px;white-space:nowrap;overflow:hidden}
+    [data-theme=continental] .radio:after{content:'USB                                      AUX';position:absolute;left:31px;right:31px;bottom:7px;color:#8f9491;font:700 7px Arial,sans-serif;letter-spacing:.08em;pointer-events:none}
+    [data-theme=continental] .top{gap:8px;margin-left:78px}
+    [data-theme=continental] .display{min-height:51px;border:2px solid #080909;border-radius:1px;background:linear-gradient(#ffb029,#e78b18);color:#19130b;box-shadow:inset 0 0 8px #7b3f00aa,inset 0 0 0 1px #ffd276;font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;letter-spacing:.07em;text-shadow:0 1px #ffd786}
+    [data-theme=continental] .playback-control:before{background:#5e390b}
+    [data-theme=continental] .playback-control.is-playing:before{background:#211506;box-shadow:none}
+    [data-theme=continental] .playback-control.is-paused:before{background:linear-gradient(90deg,#211506 0 38%,transparent 38% 62%,#211506 62% 100%)}
+    [data-theme=continental] .add{width:37px;height:51px;border:1px solid #0b0c0c;border-radius:2px;background:linear-gradient(#343838,#1d2020);color:#f3a43b;box-shadow:inset 0 1px #ffffff1c,0 2px 3px #0008}
+    [data-theme=continental] .add:before{width:12px}
+    [data-theme=continental] .add:after{height:12px}
+    [data-theme=continental] .volume-control{position:absolute;left:-78px;width:64px;height:64px}
+    [data-theme=continental] .volume-control:before{content:'VOL';position:absolute;left:-13px;top:24px;color:#aaa;font:700 8px Arial,sans-serif}
+    [data-theme=continental] .volume-knob{border:2px solid #080909;background:radial-gradient(circle,#090a0a 0 39%,#323635 41% 54%,#050606 56% 64%,#c28a38 66% 69%,#151717 71%);box-shadow:inset 0 0 0 1px #5b5f5d,0 3px 6px #000b}
+    [data-theme=continental] .volume-knob:after{top:7px;width:3px;height:10px;background:#f4a43b}
+    [data-theme=continental] .presets{grid-template-columns:repeat(6,minmax(0,1fr));max-width:none;margin:13px 0 10px;gap:0}
+    [data-theme=continental] .preset-slot{gap:5px}
+    [data-theme=continental] .preset,[data-theme=continental] .preset.empty{width:100%;height:35px;aspect-ratio:auto;border:1px solid #080909;border-radius:0;background:linear-gradient(#303434,#1a1d1d);box-shadow:inset 0 1px #ffffff17,0 2px 2px #0006;color:#f3a43b;transform:none}
+    [data-theme=continental] .preset:after,[data-theme=continental] .preset.empty:after{left:50%;top:50%;width:auto;height:auto;border-radius:0;background:none;transform:translate(-50%,-50%);color:#f3a43b;font:700 13px Arial,sans-serif}
+    [data-theme=continental] .preset-slot:nth-child(1) .preset:after{content:'1'}
+    [data-theme=continental] .preset-slot:nth-child(2) .preset:after{content:'2'}
+    [data-theme=continental] .preset-slot:nth-child(3) .preset:after{content:'3'}
+    [data-theme=continental] .preset-slot:nth-child(4) .preset:after{content:'4'}
+    [data-theme=continental] .preset-slot:nth-child(5) .preset:after{content:'5'}
+    [data-theme=continental] .preset-slot:nth-child(6) .preset:after{content:'6'}
+    [data-theme=continental] .preset:hover{background:linear-gradient(#3c4140,#232626);transform:none}
+    [data-theme=continental] .preset.playing{transform:translateY(2px);background:#121414;box-shadow:inset 0 2px 5px #000,0 1px #454a48}
+    [data-theme=continental] .preset.playing:after{color:#ffd06a;text-shadow:0 0 6px #f3a43b}
+    [data-theme=continental] .preset.playing .level-ring{display:none}
+    [data-theme=continental] .preset-label{color:#555a57;font:700 8px Arial,sans-serif;letter-spacing:.03em;text-shadow:none}
+    [data-theme=continental] button.preset-label:hover{color:#bd7418}
+    [data-theme=continental] .search-popover{background:#202323;border-color:#090a0a;color:#eee;box-shadow:0 14px 30px #0007}
+    [data-theme=continental] .search-top,[data-theme=continental] .result-heading{color:#f3a43b;border-color:#424746}
+    [data-theme=continental] .search-top select,[data-theme=continental] .search-result{background:#303434;color:#eee}
+    [data-theme=continental] .search-result:hover,[data-theme=continental] .search-result:focus-visible{background:#49371f}
+    [data-theme=continental] .result-meta,[data-theme=continental] .search-message,[data-theme=continental] .location-status{color:#a4aaa6}
+    [data-theme=continental] .manual,[data-theme=continental] .location-button{color:#f3a43b}
+    [data-theme=continental] dialog{background:#202323;color:#eee;border-color:#0a0b0b}
+    [data-theme=continental] dialog input,[data-theme=continental] dialog select{background:#111313;color:#eee;border-color:#555}
+    [data-theme=continental] .save{background:#e69728;color:#17120b}
     @media(max-width:690px){
       .radio{padding:31px 30px 38px}
       .display{min-height:52px}
@@ -278,6 +324,16 @@
       [data-theme=mustang] .volume-knob{box-shadow:inset 0 0 0 5px #b9bdbe,inset 0 0 6px #0007,0 3px 6px #000b}
       [data-theme=mustang] .presets{grid-template-columns:repeat(2,minmax(0,1fr));max-width:280px;gap:28px 12px}
       [data-theme=mustang] .preset,[data-theme=mustang] .preset.empty{width:min(108px,100%);height:48px}
+      [data-theme=continental] .theme-row{display:flex}
+      [data-theme=continental] .radio{width:calc(100% - 24px);padding:45px 11px 22px;border-radius:8px}
+      [data-theme=continental] .radio:before{left:10px;right:10px;top:9px;padding:0 5px;font-size:7px;word-spacing:3px;letter-spacing:.04em}
+      [data-theme=continental] .top{margin-left:55px;gap:5px}
+      [data-theme=continental] .display{min-height:45px;padding:8px;font-size:10px;letter-spacing:.03em}
+      [data-theme=continental] .add{width:31px;height:45px}
+      [data-theme=continental] .volume-control{left:-55px;width:47px;height:47px}
+      [data-theme=continental] .volume-control:before{display:none}
+      [data-theme=continental] .presets{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:12px}
+      [data-theme=continental] .preset,[data-theme=continental] .preset.empty{height:35px}
     }
     @media(prefers-reduced-motion:reduce){.preset{transition:none}.level-ring .fill{animation:none;stroke-dasharray:55 100}}
   </style>
@@ -291,6 +347,7 @@
         <option value="minimal">Braun minimal</option>
         <option value="retro">Windows 98</option>
         <option value="mustang">1970 Mustang</option>
+        <option value="continental">Continental DIN</option>
       </select>
     </div>
   </div>
@@ -352,7 +409,7 @@
         $('desktop-folder').style.left=position.x+'px';$('desktop-folder').style.top=position.y+'px';
         return position;
       }
-      try{const savedTheme=localStorage.getItem(themeKey);if(['minimal','retro','mustang'].includes(savedTheme))theme=savedTheme}catch{}
+      try{const savedTheme=localStorage.getItem(themeKey);if(['minimal','retro','mustang','continental'].includes(savedTheme))theme=savedTheme}catch{}
       retro=theme==='retro';
       function syncWindow(){
         windowRadio.hidden=retro&&(windowState==='minimized'||windowState==='closed');
