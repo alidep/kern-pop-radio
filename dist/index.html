@@ -354,10 +354,12 @@
     }
     .theme-controls{margin:0!important}
     .theme-label{display:none!important}
-    [data-theme=minimal] .radio,[data-theme=mustang] .radio,[data-theme=continental] .radio{margin-top:76px}
+    body{min-height:100dvh;display:grid;align-items:safe center;justify-items:center}
+    .radio{margin:0 auto!important}
+    [data-theme=retro] .radio{top:50%;left:50%;transform:translate(-50%,-50%)}
     @media(max-width:560px){
       .theme-row{top:12px!important;right:12px!important}
-      [data-theme=retro] .radio{margin-top:66px}
+      [data-theme=retro] .radio{margin:0 auto!important}
     }
   </style>
 </head>
