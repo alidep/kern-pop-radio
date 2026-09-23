@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
   <meta name="description" content="A simple radio for six favorite live stations.">
-  <title>Kern Pop Radio</title>
+  <title>Radio</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23ffffff'/%3E%3Ccircle cx='32' cy='32' r='22' fill='%23eeeeeb' stroke='%23d2d2cf'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23eb7047'/%3E%3C/svg%3E">
   <style>
     @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('./plex-mono-500-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
@@ -336,11 +336,33 @@
       [data-theme=continental] .preset,[data-theme=continental] .preset.empty{height:35px}
     }
     @media(prefers-reduced-motion:reduce){.preset{transition:none}.level-ring .fill{animation:none;stroke-dasharray:55 100}}
+    .wordmark{display:none!important}
+    .theme-row{
+      position:fixed!important;
+      z-index:20;
+      top:14px!important;
+      right:14px!important;
+      left:auto!important;
+      width:auto!important;
+      min-height:0!important;
+      margin:0!important;
+      padding:0!important;
+      display:block!important;
+      background:transparent!important;
+      border:0!important;
+      box-shadow:none!important;
+    }
+    .theme-controls{margin:0!important}
+    .theme-label{display:none!important}
+    [data-theme=minimal] .radio,[data-theme=mustang] .radio,[data-theme=continental] .radio{margin-top:76px}
+    @media(max-width:560px){
+      .theme-row{top:12px!important;right:12px!important}
+      [data-theme=retro] .radio{margin-top:66px}
+    }
   </style>
 </head>
 <body>
   <div class="theme-row" role="group" aria-label="Radio appearance">
-    <h1 class="wordmark">Kern Pop Radio</h1>
     <div class="theme-controls">
       <label class="theme-label" for="theme-select">Style</label>
       <select class="theme-select" id="theme-select" aria-label="Radio style">
@@ -351,8 +373,8 @@
       </select>
     </div>
   </div>
-  <main class="radio" aria-label="Kern Pop Radio">
-    <div class="retro-header" id="retro-header"><strong><span class="window-icon" aria-hidden="true">♫</span>Kern Pop Radio</strong><span class="window-controls"><button type="button" id="window-minimize" aria-label="Minimize Kern Pop Radio" title="Minimize">_</button><button type="button" id="window-maximize" aria-label="Maximize Kern Pop Radio" title="Maximize">□</button><button type="button" id="window-close" aria-label="Close Kern Pop Radio" title="Close">×</button></span></div>
+  <main class="radio" aria-label="Radio">
+    <div class="retro-header" id="retro-header"><strong><span class="window-icon" aria-hidden="true">♫</span>Radio</strong><span class="window-controls"><button type="button" id="window-minimize" aria-label="Minimize Radio" title="Minimize">_</button><button type="button" id="window-maximize" aria-label="Maximize Radio" title="Maximize">□</button><button type="button" id="window-close" aria-label="Close Radio" title="Close">×</button></span></div>
     <div class="top">
       <div class="display" id="display-box"><button class="playback-control" id="playback-control" type="button" aria-label="No station playing" disabled></button><span id="display" aria-live="polite">Choose a station</span><input id="search" type="search" placeholder="Search radio stations…" aria-label="Search radio stations" autocomplete="off" hidden></div>
       <button class="add" id="add" aria-label="Add or edit a station" title="Add or edit a station">+</button>
@@ -368,8 +390,8 @@
     <div class="presets" id="presets" aria-label="Six favorite stations"></div>
     <p class="status" id="status" role="status" aria-live="polite"></p>
   </main>
-  <button class="desktop-folder" id="desktop-folder" type="button" aria-label="Open Kern Pop Radio" hidden><img src="./folder-closed.png" alt=""><span>Kern Pop Radio</span></button>
-  <button class="taskbar-button" id="taskbar-button" type="button" aria-label="Restore Kern Pop Radio" hidden><img src="./folder-open.png" alt=""><span>Kern Pop Radio</span></button>
+  <button class="desktop-folder" id="desktop-folder" type="button" aria-label="Open Radio" hidden><img src="./folder-closed.png" alt=""><span>Radio</span></button>
+  <button class="taskbar-button" id="taskbar-button" type="button" aria-label="Restore Radio" hidden><img src="./folder-open.png" alt=""><span>Radio</span></button>
   <dialog id="editor" aria-labelledby="editor-title">
     <form id="form" method="dialog">
       <div class="modal-head"><h1 id="editor-title">Add a station</h1><button class="close" type="button" id="close" aria-label="Close">×</button></div>
@@ -416,7 +438,7 @@
         windowRadio.classList.toggle('maximized',windowState==='maximized');
         $('desktop-folder').hidden=!(retro&&windowState==='closed');
         $('taskbar-button').hidden=!(retro&&windowState==='minimized');
-        $('window-maximize').setAttribute('aria-label',windowState==='maximized'?'Restore Kern Pop Radio':'Maximize Kern Pop Radio');
+        $('window-maximize').setAttribute('aria-label',windowState==='maximized'?'Restore Radio':'Maximize Radio');
         $('window-maximize').title=windowState==='maximized'?'Restore':'Maximize';
       }
       function setTheme(){retro=theme==='retro';document.documentElement.dataset.theme=theme;$('theme-select').value=theme;syncWindow()}
