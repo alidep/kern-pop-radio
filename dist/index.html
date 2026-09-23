@@ -65,9 +65,10 @@
     .add.searching:before,.add.searching:after{transform:translate(-50%,-50%) rotate(45deg)}
     .add:hover{transform:translateY(1px);box-shadow:inset 0 2px 2px #ffffff70,0 1px 0 #b94e2c,1px 2px 3px #0000001f}
     .volume-control{--volume-angle:-76deg;position:relative;display:block;flex:none;width:43px;height:43px;margin:0;cursor:ns-resize}
-    .volume-control input{position:absolute;inset:0;z-index:2;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:ns-resize}
+    .volume-control>input[type=range]{position:absolute;inset:0;z-index:2;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:ns-resize}
     .volume-knob{position:absolute;inset:0;border:1px solid #f8f8f8;border-radius:50%;background:radial-gradient(circle at 38% 30%,#fff,#f3f3f5 68%,#e5e5e8);box-shadow:inset 1px 2px 3px #fff,inset -1px -2px 3px #d9dadd,0 2px 1px #b4b4b7,2px 4px 7px #0002;transform:rotate(var(--volume-angle));pointer-events:none}
     .volume-knob:after{content:'';position:absolute;left:50%;top:6px;width:3px;height:8px;border-radius:2px;background:#e96c3e;transform:translateX(-50%)}
+    .retro-volume-icon,.retro-volume-popup{display:none}
     .presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 27px;max-width:420px;margin:47px auto 0;align-items:start}
     .preset-slot{min-width:0;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative}
     .preset-slot.filled:before{display:none}
@@ -137,11 +138,22 @@
     [data-theme=retro] .add:before,[data-theme=retro] .add:after{border-radius:0}
     [data-theme=retro] .add:hover{transform:none;box-shadow:1px 1px 0 #000;background:#d0d0d0}
     [data-theme=retro] .add:active{border-color:#404040 #fff #fff #404040;box-shadow:inset 1px 1px 0 #000;transform:translate(1px,1px)}
-    [data-theme=retro] .volume-control{width:62px;height:43px;cursor:ew-resize}
-    [data-theme=retro] .volume-control input{cursor:ew-resize}
-    [data-theme=retro] .volume-knob{border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:1px 1px 0 #000;transform:none}
-    [data-theme=retro] .volume-knob:before{content:'';position:absolute;left:8px;top:14px;width:14px;height:15px;background:#000;clip-path:polygon(0 32%,36% 32%,100% 0,100% 100%,36% 68%,0 68%)}
-    [data-theme=retro] .volume-knob:after{content:'';position:absolute;left:27px;top:15px;width:calc(var(--volume-level,80)*.27px);max-width:27px;height:13px;border-radius:0;background:repeating-linear-gradient(90deg,#000 0 3px,transparent 3px 5px);transform:none}
+    [data-theme=retro] .volume-control{width:36px;height:43px;cursor:default}
+    [data-theme=retro] .volume-knob{display:none}
+    [data-theme=retro] .retro-volume-icon{display:block;position:absolute;inset:0;width:36px;height:43px;padding:0;border:0;background:transparent}
+    [data-theme=retro] .retro-volume-icon:before{content:'';position:absolute;left:7px;top:11px;width:22px;height:22px;background:#101010;clip-path:polygon(0 35%,25% 35%,68% 5%,68% 95%,25% 65%,0 65%)}
+    [data-theme=retro] .retro-volume-icon:after{content:'';position:absolute;left:9px;top:14px;width:16px;height:16px;background:#fff36a;clip-path:polygon(0 37%,25% 37%,72% 4%,72% 96%,25% 63%,0 63%)}
+    [data-theme=retro] .retro-volume-icon:focus-visible{outline:1px dotted #000;outline-offset:-3px}
+    [data-theme=retro] .volume-control>input[type=range]{display:none}
+    [data-theme=retro] .retro-volume-popup{position:absolute;z-index:12;right:0;top:47px;width:132px;height:184px;padding:12px 13px 10px;border:2px solid;border-color:#fff #404040 #404040 #fff;background:#c0c0c0;box-shadow:2px 2px 0 #000;color:#000;font:14px Tahoma,'MS Sans Serif',Arial,sans-serif;text-align:center}
+    [data-theme=retro] .volume-control.volume-open .retro-volume-popup{display:block}
+    [data-theme=retro] .volume-control.volume-open>input[type=range]{display:block;inset:auto;left:-80px;top:80px;z-index:14;width:100px;height:22px;margin:0;padding:0;border:0;border-radius:0;background:transparent;opacity:1;cursor:ns-resize;appearance:none;transform:rotate(-90deg)}
+    [data-theme=retro] .volume-control>input[type=range]::-webkit-slider-runnable-track{height:4px;border:1px solid;border-color:#808080 #fff #fff #808080;background:#fff;box-shadow:inset 1px 1px #000}
+    [data-theme=retro] .volume-control>input[type=range]::-webkit-slider-thumb{width:12px;height:23px;margin-top:-11px;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:1px 1px #000;appearance:none}
+    [data-theme=retro] .retro-volume-popup strong{display:block;font-weight:400}
+    [data-theme=retro] .retro-mute{position:absolute;left:14px;bottom:10px;display:flex;align-items:center;gap:7px;margin:0;font:14px Tahoma,'MS Sans Serif',Arial,sans-serif;text-decoration:underline;text-underline-offset:2px}
+    [data-theme=retro] .retro-mute input{appearance:none;width:17px;height:17px;margin:0;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;background:#fff}
+    [data-theme=retro] .retro-mute input:checked:after{content:'✓';display:block;margin:-5px 0 0 1px;font:700 19px Arial,sans-serif;color:#000}
     [data-theme=retro] .presets{max-width:none;margin:22px auto 0;gap:20px 12px}
     [data-theme=retro] .preset-slot{gap:2px}
     [data-theme=retro] .preset,[data-theme=retro] .preset.empty{width:104px;height:66px;aspect-ratio:auto;border:1px solid transparent;border-radius:0;background:transparent;box-shadow:none;color:#000;transition:none}
@@ -222,8 +234,8 @@
     [data-theme=continental] .theme-label{color:#626460}
     [data-theme=continental] .theme-select{border-color:#b8bab7;background:#202322;color:#f0a43b;box-shadow:inset 0 1px #ffffff1c,0 2px 4px #0002;font-family:Arial,sans-serif}
     [data-theme=continental] .radio{position:relative;width:min(620px,calc(100% - 40px));padding:50px 25px 22px;border:2px solid #090a0a;border-radius:13px;background:linear-gradient(#292d2d,#151818);box-shadow:inset 0 0 0 2px #3d4140,inset 0 -8px 15px #0006,0 14px 30px #0004}
-    [data-theme=continental] .radio:before{content:'CONTINENTAL     SRC     BAND     SEL     DISP        ◀        ▶';position:absolute;left:24px;right:24px;top:11px;height:30px;padding:0 13px;border:1px solid #080909;background:linear-gradient(#323636,#202323);color:#f3a43b;box-shadow:inset 0 1px #ffffff1a;display:flex;align-items:center;justify-content:center;font:700 9px Arial,sans-serif;letter-spacing:.12em;word-spacing:14px;white-space:nowrap;overflow:hidden}
-    [data-theme=continental] .radio:after{content:'USB                                      AUX';position:absolute;left:31px;right:31px;bottom:7px;color:#8f9491;font:700 7px Arial,sans-serif;letter-spacing:.08em;pointer-events:none}
+    [data-theme=continental] .radio:before{content:'CONTINENTAL     SRC     BAND     SEL     DISP        ◀        ▶';position:absolute;left:24px;right:24px;top:11px;height:30px;padding:0 13px;border:1px solid #080909;background:linear-gradient(#323636,#202323);color:#f3a43b;box-shadow:inset 0 1px #ffffff1a;display:flex;align-items:center;justify-content:center;font:700 11px Arial,sans-serif;letter-spacing:.08em;word-spacing:10px;white-space:nowrap;overflow:hidden}
+    [data-theme=continental] .radio:after{content:'USB                                      AUX';position:absolute;left:31px;right:31px;bottom:6px;color:#b7bbb7;font:700 9px Arial,sans-serif;letter-spacing:.06em;pointer-events:none}
     [data-theme=continental] .top{gap:8px;margin-left:78px}
     [data-theme=continental] .display{min-height:51px;border:2px solid #080909;border-radius:1px;background:linear-gradient(#ffb029,#e78b18);color:#19130b;box-shadow:inset 0 0 8px #7b3f00aa,inset 0 0 0 1px #ffd276;font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;letter-spacing:.07em;text-shadow:0 1px #ffd786}
     [data-theme=continental] .playback-control:before{background:#5e390b}
@@ -233,7 +245,7 @@
     [data-theme=continental] .add:before{width:12px}
     [data-theme=continental] .add:after{height:12px}
     [data-theme=continental] .volume-control{position:absolute;left:-78px;width:64px;height:64px}
-    [data-theme=continental] .volume-control:before{content:'VOL';position:absolute;left:-13px;top:24px;color:#aaa;font:700 8px Arial,sans-serif}
+    [data-theme=continental] .volume-control:before{content:'VOL';position:absolute;left:-13px;top:23px;color:#c4c7c3;font:700 10px Arial,sans-serif}
     [data-theme=continental] .volume-knob{border:2px solid #080909;background:radial-gradient(circle,#090a0a 0 39%,#323635 41% 54%,#050606 56% 64%,#c28a38 66% 69%,#151717 71%);box-shadow:inset 0 0 0 1px #5b5f5d,0 3px 6px #000b}
     [data-theme=continental] .volume-knob:after{top:7px;width:3px;height:10px;background:#f4a43b}
     [data-theme=continental] .presets{grid-template-columns:repeat(6,minmax(0,1fr));max-width:none;margin:13px 0 10px;gap:0}
@@ -250,7 +262,7 @@
     [data-theme=continental] .preset.playing{transform:translateY(2px);background:#121414;box-shadow:inset 0 2px 5px #000,0 1px #454a48}
     [data-theme=continental] .preset.playing:after{color:#ffd06a;text-shadow:0 0 6px #f3a43b}
     [data-theme=continental] .preset.playing .level-ring{display:none}
-    [data-theme=continental] .preset-label{color:#555a57;font:700 8px Arial,sans-serif;letter-spacing:.03em;text-shadow:none}
+    [data-theme=continental] .preset-label{color:#aeb2ae;font:700 10px Arial,sans-serif;letter-spacing:.02em;text-shadow:none}
     [data-theme=continental] button.preset-label:hover{color:#bd7418}
     [data-theme=continental] .search-popover{background:#202323;border-color:#090a0a;color:#eee;box-shadow:0 14px 30px #0007}
     [data-theme=continental] .search-top,[data-theme=continental] .result-heading{color:#f3a43b;border-color:#424746}
@@ -328,9 +340,9 @@
       [data-theme=mustang] .preset,[data-theme=mustang] .preset.empty{width:min(108px,100%);height:48px}
       [data-theme=continental] .theme-row{display:flex}
       [data-theme=continental] .radio{width:calc(100% - 24px);padding:45px 11px 22px;border-radius:8px}
-      [data-theme=continental] .radio:before{left:10px;right:10px;top:9px;padding:0 5px;font-size:7px;word-spacing:3px;letter-spacing:.04em}
+      [data-theme=continental] .radio:before{left:10px;right:10px;top:9px;padding:0 5px;font-size:9px;word-spacing:3px;letter-spacing:.02em}
       [data-theme=continental] .top{margin-left:55px;gap:5px}
-      [data-theme=continental] .display{min-height:45px;padding:8px;font-size:10px;letter-spacing:.03em}
+      [data-theme=continental] .display{min-height:45px;padding:8px;font-size:12px;letter-spacing:.02em}
       [data-theme=continental] .add{width:31px;height:45px}
       [data-theme=continental] .volume-control{left:-55px;width:47px;height:47px}
       [data-theme=continental] .volume-control:before{display:none}
@@ -382,7 +394,7 @@
     <div class="top">
       <div class="display" id="display-box"><button class="playback-control" id="playback-control" type="button" aria-label="No station playing" disabled></button><span id="display" aria-live="polite">Choose a station</span><input id="search" type="search" placeholder="Search radio stations…" aria-label="Search radio stations" autocomplete="off" hidden></div>
       <button class="add" id="add" aria-label="Add or edit a station" title="Add or edit a station">+</button>
-      <label class="volume-control" id="volume-control" title="Radio volume"><span class="volume-knob" aria-hidden="true"></span><input id="volume" type="range" min="0" max="100" value="80" aria-label="Radio volume"></label>
+      <div class="volume-control" id="volume-control" title="Radio volume"><span class="volume-knob" aria-hidden="true"></span><button class="retro-volume-icon" id="retro-volume-icon" type="button" aria-label="Open volume control" aria-expanded="false"></button><input id="volume" type="range" min="0" max="100" value="80" aria-label="Radio volume"><span class="retro-volume-popup" id="retro-volume-popup"><strong>Volume</strong><label class="retro-mute"><input id="volume-mute" type="checkbox"> Mute</label></span></div>
       <div class="search-popover" id="search-popover" hidden>
         <div class="search-top"><span>Save to preset</span><select id="search-slot" aria-label="Preset to save station"></select></div>
         <button class="manual" id="manual" type="button">Use a stream URL instead</button>
@@ -467,12 +479,17 @@
       function setVolume(value,announce=false){
         volume=Math.max(0,Math.min(100,Math.round(value)));audio.volume=volume/100;$('volume').value=String(volume);
         $('volume-control').style.setProperty('--volume-angle',(-130+volume*2.6)+'deg');$('volume-control').style.setProperty('--volume-level',String(volume));$('volume-control').title='Radio volume: '+volume+'% (computer volume is separate)';
+        $('volume-mute').checked=volume===0;
         if(announce)$('status').textContent='Radio volume '+volume+' percent.';
         try{localStorage.setItem(volumeKey,String(volume))}catch{}
       }
       setVolume(volume);
       $('volume').addEventListener('input',event=>setVolume(Number(event.target.value),true));
       $('volume-control').addEventListener('wheel',event=>{event.preventDefault();setVolume(volume+(event.deltaY<0?5:-5),true)},{passive:false});
+      let volumeBeforeMute=volume||80;
+      $('retro-volume-icon').addEventListener('click',event=>{event.stopPropagation();const open=$('volume-control').classList.toggle('volume-open');$('retro-volume-icon').setAttribute('aria-expanded',String(open))});
+      $('volume-mute').addEventListener('change',event=>{if(event.target.checked){if(volume>0)volumeBeforeMute=volume;setVolume(0,true)}else setVolume(volumeBeforeMute||80,true)});
+      document.addEventListener('pointerdown',event=>{if(!event.target.closest('#volume-control')){$('volume-control').classList.remove('volume-open');$('retro-volume-icon').setAttribute('aria-expanded','false')}});
       let hls=null,activeUrl='',cancelPreparation=null,preparing=false,recoveryUsed=false,recovering=false;
       function restoreWindow(){windowState=windowState==='minimized'?beforeMinimize:'normal';syncWindow()}
       const folder=$('desktop-folder');let folderDrag=null,folderMoved=false;
@@ -688,6 +705,7 @@
         $('add').classList.add('searching');$('add').setAttribute('aria-label','Close station search');$('add').title='Close station search';
         $('search').value='';renderSaved();searchMessage('Loading popular stations…');$('search').focus();searchStations();
       }
+      function searchTarget(){const empty=stations.findIndex(s=>!s);return selected>=0&&selected<6?selected:empty<0?0:empty}
       document.addEventListener('pointerdown',event=>{if(searchOpen&&!event.target.closest('.top'))closeSearch()});
       const apiServers=['de1','all','de2'];
       const featuredStations=[
@@ -868,9 +886,9 @@
       });
       $('search').addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(searchStations,260)});
       $('search').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeSearch()}if(e.key==='Enter'){e.preventDefault();($('saved-results').querySelector('.search-result')||$('search-results').querySelector('button'))?.click()}});
-      $('display-box').addEventListener('click',()=>{if(!searchOpen){const empty=stations.findIndex(s=>!s);openSearch(empty<0?0:empty)}});
+      $('display-box').addEventListener('click',()=>{if(!searchOpen)openSearch(searchTarget())});
       $('manual').addEventListener('click',()=>{const i=Number($('search-slot').value);closeSearch();openEditor(i)});
-      document.addEventListener('keydown',e=>{if(searchOpen||$('editor').open||e.metaKey||e.ctrlKey||e.altKey||e.key.length!==1||e.target.closest('input,select,textarea'))return;e.preventDefault();const empty=stations.findIndex(s=>!s);openSearch(empty<0?0:empty);$('search').value=e.key;clearTimeout(searchTimer);searchTimer=setTimeout(searchStations,260)});
+      document.addEventListener('keydown',e=>{if(searchOpen||$('editor').open||e.metaKey||e.ctrlKey||e.altKey||e.key.length!==1||e.target.closest('input,select,textarea'))return;e.preventDefault();openSearch(searchTarget());$('search').value=e.key;clearTimeout(searchTimer);searchTimer=setTimeout(searchStations,260)});
       function fillSlot(){
         const i=Number($('slot').value),s=stations[i];
         $('name').value=s?.name||'';$('url').value=s?.url||'';
@@ -882,7 +900,7 @@
         stations.forEach((s,index)=>{const option=document.createElement('option');option.value=index;option.textContent=String(index+1).padStart(2,'0')+(s?' · '+s.name:' · Empty');$('slot').append(option)});
         $('slot').value=String(i);fillSlot();$('editor').showModal();$('name').focus();
       }
-      $('add').addEventListener('click',()=>{if(searchOpen){closeSearch();return}const empty=stations.findIndex(s=>!s);openSearch(empty<0?0:empty)});
+      $('add').addEventListener('click',()=>{if(searchOpen){closeSearch();return}openSearch(searchTarget())});
       $('slot').addEventListener('change',fillSlot);
       $('close').addEventListener('click',()=>$('editor').close());
       $('editor').addEventListener('click',e=>{if(e.target===$('editor'))$('editor').close()});
