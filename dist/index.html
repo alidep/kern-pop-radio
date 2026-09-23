@@ -137,9 +137,11 @@
     [data-theme=retro] .add:before,[data-theme=retro] .add:after{border-radius:0}
     [data-theme=retro] .add:hover{transform:none;box-shadow:1px 1px 0 #000;background:#d0d0d0}
     [data-theme=retro] .add:active{border-color:#404040 #fff #fff #404040;box-shadow:inset 1px 1px 0 #000;transform:translate(1px,1px)}
-    [data-theme=retro] .volume-control{width:43px;height:43px;cursor:default}
+    [data-theme=retro] .volume-control{width:62px;height:43px;cursor:ew-resize}
+    [data-theme=retro] .volume-control input{cursor:ew-resize}
     [data-theme=retro] .volume-knob{border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:1px 1px 0 #000;transform:none}
-    [data-theme=retro] .volume-knob:after{top:5px;width:3px;height:9px;border-radius:0;background:#000;transform:translateX(-50%) rotate(var(--volume-angle));transform-origin:50% 16px}
+    [data-theme=retro] .volume-knob:before{content:'';position:absolute;left:8px;top:14px;width:14px;height:15px;background:#000;clip-path:polygon(0 32%,36% 32%,100% 0,100% 100%,36% 68%,0 68%)}
+    [data-theme=retro] .volume-knob:after{content:'';position:absolute;left:27px;top:15px;width:calc(var(--volume-level,80)*.27px);max-width:27px;height:13px;border-radius:0;background:repeating-linear-gradient(90deg,#000 0 3px,transparent 3px 5px);transform:none}
     [data-theme=retro] .presets{max-width:none;margin:22px auto 0;gap:20px 12px}
     [data-theme=retro] .preset-slot{gap:2px}
     [data-theme=retro] .preset,[data-theme=retro] .preset.empty{width:104px;height:66px;aspect-ratio:auto;border:1px solid transparent;border-radius:0;background:transparent;box-shadow:none;color:#000;transition:none}
@@ -464,7 +466,7 @@
       try{const storedVolume=localStorage.getItem(volumeKey),savedVolume=Number(storedVolume);if(storedVolume!==null&&Number.isFinite(savedVolume)&&savedVolume>=0&&savedVolume<=100)volume=savedVolume}catch{}
       function setVolume(value,announce=false){
         volume=Math.max(0,Math.min(100,Math.round(value)));audio.volume=volume/100;$('volume').value=String(volume);
-        $('volume-control').style.setProperty('--volume-angle',(-130+volume*2.6)+'deg');$('volume-control').title='Radio volume: '+volume+'% (computer volume is separate)';
+        $('volume-control').style.setProperty('--volume-angle',(-130+volume*2.6)+'deg');$('volume-control').style.setProperty('--volume-level',String(volume));$('volume-control').title='Radio volume: '+volume+'% (computer volume is separate)';
         if(announce)$('status').textContent='Radio volume '+volume+' percent.';
         try{localStorage.setItem(volumeKey,String(volume))}catch{}
       }
