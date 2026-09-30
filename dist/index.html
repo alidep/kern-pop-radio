@@ -467,11 +467,14 @@
         const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem('little-radio-presets-v2'));
         if(Array.isArray(saved)&&saved.length===6)stations=saved.map(s=>s&&typeof s.name==='string'&&typeof s.url==='string'?{name:s.name,url:s.url,uuid:typeof s.uuid==='string'?s.uuid:''}:null);
       }catch{}
+      const kchungStream='https://kchung-radio-01e54a81.radiocult.fm/stream';let migratedKchung=false;
+      stations=stations.map(station=>{if(station&&/\bkchung\b/i.test(station.name)&&station.url!==kchungStream){migratedKchung=true;return {...station,url:kchungStream,uuid:''}}return station});
+      if(migratedKchung)try{localStorage.setItem(key,JSON.stringify(stations))}catch{}
       const savedKey='little-radio-saved-v1';let savedStations=[];
       try{
         const stored=localStorage.getItem(savedKey);
         const rows=stored===null?(localStorage.getItem(key)||localStorage.getItem('little-radio-presets-v2')?stations.filter(Boolean):[]):JSON.parse(stored);
-        if(Array.isArray(rows))savedStations=rows.filter(s=>s&&typeof s.name==='string'&&typeof s.url==='string'&&s.url.startsWith('https://')).map(s=>({name:s.name,url:s.url,uuid:typeof s.uuid==='string'?s.uuid:''})).slice(0,50);
+        if(Array.isArray(rows))savedStations=rows.filter(s=>s&&typeof s.name==='string'&&typeof s.url==='string'&&s.url.startsWith('https://')).map(s=>({name:s.name,url:/\bkchung\b/i.test(s.name)?kchungStream:s.url,uuid:/\bkchung\b/i.test(s.name)?'':typeof s.uuid==='string'?s.uuid:''})).slice(0,50);
         if(stored===null)localStorage.setItem(savedKey,JSON.stringify(savedStations));
       }catch{}
       let selected=-1,playing=false,paused=false,request=0,searchTimer,searchAbort,searchOpen=false,place=null;
@@ -739,6 +742,7 @@
         {name:'93.1 Jack FM',aliases:['KCBS-FM','JackFM','931 Jack'],state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'AAC+',url:'https://live.amperwave.net/direct/audacy-kcbsfmaac-imc'},
         {name:'102.7 KIIS FM',aliases:['KIIS','KIIS-FM'],state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'AAC',url:'https://stream.revma.ihrhls.com/zc185'},
         {name:'KCRW 89.9',aliases:['KCRW Live'],state:'Santa Monica, California',countrycode:'US',geo_lat:34.0195,geo_long:-118.4912,codec:'MP3',url:'https://streams.kcrw.com/kcrw_mp3'},
+        {name:'KCHUNG Radio 1630 AM',aliases:['KCHUNG','KCHUNG Los Angeles','KCHUNG Radio'],state:'Los Angeles, California',countrycode:'US',geo_lat:34.0611,geo_long:-118.2385,codec:'MP3',url:kchungStream},
         {name:'KDVS 90.3 FM',aliases:['KDVS','KDVS Davis','KDVS Radio from Davis','90.3 KDVS'],state:'Davis, California',countrycode:'US',geo_lat:38.5449,geo_long:-121.7405,codec:'AAC',url:'https://listen.kdvs.org/stream'},
         {name:'KOST 103.5',aliases:['KOST-FM'],state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'AAC',url:'https://stream.revma.ihrhls.com/zc193'},
         {name:'Power 105.1',aliases:['WWPR-FM','Power 1051'],state:'New York, New York',countrycode:'US',geo_lat:40.7128,geo_long:-74.0060,codec:'AAC',url:'https://stream.revma.ihrhls.com/zc1481'},
