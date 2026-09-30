@@ -849,7 +849,7 @@
         rows.forEach(s=>{
           const button=document.createElement('button');button.type='button';button.className='search-result';
           const name=document.createElement('span');name.className='result-name';name.textContent=s.displayName||s.name;
-          const meta=document.createElement('span');meta.className='result-meta';meta.textContent=[s.format,s.state||s.countrycode,s.codec].filter(Boolean).join(' · ');
+          const meta=document.createElement('span');meta.className='result-meta';meta.textContent=[s.state||s.countrycode,s.codec].filter(Boolean).join(' · ');
           button.append(name,meta);
           button.addEventListener('click',()=>{
             chooseStation({name:String(s.displayName||s.name).trim(),url:streamUrl(s),uuid:String(s.stationuuid||'')});
@@ -895,7 +895,7 @@
         const featuredUrls=new Set(featured.map(streamUrl));
         const worldwide=best([...globalRows,...known].filter(s=>!localUrls.has(streamUrl(s))&&!featuredUrls.has(streamUrl(s))),q,9);
         $('search-results').replaceChildren();
-        if(curatedLocal.length){heading('Local favorites · '+(place.city||place.region||place.country));addResults(curatedLocal)}
+        if(curatedLocal.length){heading('Recommended local stations · '+(place.city||place.region||place.country));addResults(curatedLocal)}
         if(directoryLocal.length){heading('More nearby stations');addResults(directoryLocal)}
         if(featured.length){heading('Popular online');addResults(featured)}
         if(worldwide.length){heading(q?'Popular everywhere':'Popular stations');addResults(worldwide)}
