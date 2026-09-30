@@ -152,9 +152,10 @@
     [data-theme=retro] .volume-control>input[type=range]::-webkit-slider-runnable-track{height:4px;border:1px solid;border-color:#808080 #fff #fff #808080;background:#fff;box-shadow:inset 1px 1px #000}
     [data-theme=retro] .volume-control>input[type=range]::-webkit-slider-thumb{width:12px;height:23px;margin-top:-11px;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;background:#c0c0c0;box-shadow:1px 1px #000;appearance:none}
     [data-theme=retro] .retro-volume-popup strong{display:block;font-weight:400}
-    [data-theme=retro] .retro-mute{position:absolute;left:14px;bottom:10px;display:flex;align-items:center;gap:7px;margin:0;font:14px Tahoma,'MS Sans Serif',Arial,sans-serif;text-decoration:underline;text-underline-offset:2px}
-    [data-theme=retro] .retro-mute input{appearance:none;width:17px;height:17px;margin:0;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;background:#fff}
-    [data-theme=retro] .retro-mute input:checked:after{content:'✓';display:block;margin:-5px 0 0 1px;font:700 19px Arial,sans-serif;color:#000}
+    [data-theme=retro] .retro-mute{position:absolute;left:14px;bottom:12px;display:flex;align-items:center;gap:6px;margin:0;font:13px Tahoma,'MS Sans Serif',Arial,sans-serif;line-height:15px}
+    [data-theme=retro] .retro-mute input{appearance:none;width:13px;height:13px;margin:0;border:2px solid;border-color:#808080 #fff #fff #808080;border-radius:0;background:#fff;box-shadow:inset 1px 1px #000}
+    [data-theme=retro] .retro-mute input:checked:after{content:'';display:block;width:7px;height:4px;margin:1px 0 0 0;border:solid #000;border-width:0 0 2px 2px;transform:rotate(-45deg)}
+    [data-theme=retro] .retro-mute u{text-underline-offset:1px}
     [data-theme=retro] .presets{max-width:none;margin:22px auto 0;gap:20px 12px}
     [data-theme=retro] .preset-slot{gap:2px}
     [data-theme=retro] .preset,[data-theme=retro] .preset.empty{width:104px;height:66px;aspect-ratio:auto;border:1px solid transparent;border-radius:0;background:transparent;box-shadow:none;color:#000;transition:none}
@@ -396,7 +397,7 @@
     <div class="top">
       <div class="display" id="display-box"><button class="playback-control" id="playback-control" type="button" aria-label="No station playing" disabled></button><span id="display" aria-live="polite">Choose a station</span><input id="search" type="search" placeholder="Search radio stations…" aria-label="Search radio stations" autocomplete="off" hidden></div>
       <button class="add" id="add" aria-label="Add or edit a station" title="Add or edit a station">+</button>
-      <div class="volume-control" id="volume-control" title="Radio volume"><span class="volume-knob" aria-hidden="true"></span><button class="retro-volume-icon" id="retro-volume-icon" type="button" aria-label="Open volume control" aria-expanded="false"></button><input id="volume" type="range" min="0" max="100" value="80" aria-label="Radio volume"><span class="retro-volume-popup" id="retro-volume-popup"><strong>Volume</strong><label class="retro-mute"><input id="volume-mute" type="checkbox"> Mute</label></span></div>
+      <div class="volume-control" id="volume-control" title="Radio volume"><span class="volume-knob" aria-hidden="true"></span><button class="retro-volume-icon" id="retro-volume-icon" type="button" aria-label="Open volume control" aria-expanded="false"></button><input id="volume" type="range" min="0" max="100" value="80" aria-label="Radio volume"><span class="retro-volume-popup" id="retro-volume-popup"><strong>Volume</strong><label class="retro-mute"><input id="volume-mute" type="checkbox"><span><u>M</u>ute</span></label></span></div>
       <div class="search-popover" id="search-popover" hidden>
         <div class="search-top"><span>Save to preset</span><select id="search-slot" aria-label="Preset to save station"></select></div>
         <button class="manual" id="manual" type="button">Use a stream URL instead</button>
@@ -739,10 +740,17 @@
         ['960cf833-0601-11e8-ae97-52543be04c81','SomaFM Groove Salad']
       ];
       const knownStations=[
-        {name:'93.1 Jack FM',aliases:['KCBS-FM','JackFM','931 Jack'],state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'AAC+',url:'https://live.amperwave.net/direct/audacy-kcbsfmaac-imc'},
+        {name:'93.1 JACK FM',aliases:['KCBS-FM','JackFM','931 Jack','Jack FM Los Angeles'],format:'Adult hits',localRank:9,verified:true,state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'AAC+',url:'https://live.amperwave.net/direct/audacy-kcbsfmaac-imc'},
         {name:'102.7 KIIS FM',aliases:['KIIS','KIIS-FM'],state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'AAC',url:'https://stream.revma.ihrhls.com/zc185'},
-        {name:'KCRW 89.9',aliases:['KCRW Live'],state:'Santa Monica, California',countrycode:'US',geo_lat:34.0195,geo_long:-118.4912,codec:'MP3',url:'https://streams.kcrw.com/kcrw_mp3'},
-        {name:'KCHUNG Radio 1630 AM',aliases:['KCHUNG','KCHUNG Los Angeles','KCHUNG Radio'],state:'Los Angeles, California',countrycode:'US',geo_lat:34.0611,geo_long:-118.2385,codec:'MP3',url:kchungStream},
+        {name:'KCRW 89.9',aliases:['KCRW Live'],format:'NPR · Indie · Eclectic',localRank:1,verified:true,state:'Santa Monica, California',countrycode:'US',geo_lat:34.0195,geo_long:-118.4912,codec:'MP3',url:'https://streams.kcrw.com/kcrw_mp3'},
+        {name:'LAist 89.3',aliases:['KPCC','LAist Radio'],format:'NPR · Local news',localRank:2,verified:true,state:'Pasadena, California',countrycode:'US',geo_lat:34.1392,geo_long:-118.1485,codec:'MP3',url:'https://laist.streamguys1.com/kpcc-mp3'},
+        {name:'KPFK 90.7',aliases:['KPFK Los Angeles','Pacifica KPFK'],format:'Progressive · Community',localRank:3,verified:true,state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'MP3',url:'https://streams.pacifica.org:9000/kpfk_128'},
+        {name:'KXLU 88.9',aliases:['KXLU Los Angeles','KXLU Radio'],format:'College · Freeform',localRank:4,verified:true,state:'Los Angeles, California',countrycode:'US',geo_lat:33.9700,geo_long:-118.4170,codec:'MP3',url:'https://kxlu.streamguys1.com/kxlu-hi'},
+        {name:'Power 106',aliases:['KPWR','KPWR FM','Power 106 Los Angeles'],format:'Hip-hop · R&B',localRank:5,verified:true,state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'MP3',url:'https://playerservices.streamtheworld.com/api/livestream-redirect/KPWR.mp3'},
+        {name:'KJazz 88.1',aliases:['KKJZ','88.1 FM KJazz'],format:'Jazz',localRank:6,verified:true,state:'Long Beach, California',countrycode:'US',geo_lat:33.7701,geo_long:-118.1937,codec:'MP3',url:'https://streaming.live365.com/a49833'},
+        {name:'dublab',aliases:['dublab Los Angeles','dublab radio'],format:'Electronic · Experimental',localRank:7,verified:true,state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'MP3',url:'https://dublab.out.airtime.pro/dublab_a'},
+        {name:'The SoCal Sound 88.5',aliases:['KCSN','88.5 FM','SoCal Sound'],format:'Indie · Alternative',localRank:8,verified:true,state:'Northridge, California',countrycode:'US',geo_lat:34.2381,geo_long:-118.5301,codec:'AAC+',url:'https://stream.thesocalsound.org/1'},
+        {name:'KCHUNG Radio 1630 AM',aliases:['KCHUNG','KCHUNG Los Angeles','KCHUNG Radio'],format:'Artist-run · Freeform',localRank:10,verified:true,state:'Los Angeles, California',countrycode:'US',geo_lat:34.0611,geo_long:-118.2385,codec:'MP3',url:kchungStream},
         {name:'KDVS 90.3 FM',aliases:['KDVS','KDVS Davis','KDVS Radio from Davis','90.3 KDVS'],state:'Davis, California',countrycode:'US',geo_lat:38.5449,geo_long:-121.7405,codec:'AAC',url:'https://listen.kdvs.org/stream'},
         {name:'KOST 103.5',aliases:['KOST-FM'],state:'Los Angeles, California',countrycode:'US',geo_lat:34.0522,geo_long:-118.2437,codec:'AAC',url:'https://stream.revma.ihrhls.com/zc193'},
         {name:'Power 105.1',aliases:['WWPR-FM','Power 1051'],state:'New York, New York',countrycode:'US',geo_lat:40.7128,geo_long:-74.0060,codec:'AAC',url:'https://stream.revma.ihrhls.com/zc1481'},
@@ -789,7 +797,7 @@
       function best(rows,q,limit){
         const seen=new Set(),hosts=new Map(),results=[];
         const matches=rows.filter(s=>playable(s)&&(!q||relevance(s,q)<4));
-        matches.sort((a,b)=>relevance(a,q)-relevance(b,q)||popularity(b)-popularity(a));
+        matches.sort((a,b)=>relevance(a,q)-relevance(b,q)||Number(!!b.verified)-Number(!!a.verified)||popularity(b)-popularity(a));
         for(const s of matches){
           const identity=streamUrl(s).replace(/\/$/,'').toLowerCase();
           if(seen.has(identity))continue;
@@ -841,7 +849,7 @@
         rows.forEach(s=>{
           const button=document.createElement('button');button.type='button';button.className='search-result';
           const name=document.createElement('span');name.className='result-name';name.textContent=s.displayName||s.name;
-          const meta=document.createElement('span');meta.className='result-meta';meta.textContent=[s.state||s.countrycode,s.codec].filter(Boolean).join(' · ');
+          const meta=document.createElement('span');meta.className='result-meta';meta.textContent=[s.format,s.state||s.countrycode,s.codec].filter(Boolean).join(' · ');
           button.append(name,meta);
           button.addEventListener('click',()=>{
             chooseStation({name:String(s.displayName||s.name).trim(),url:streamUrl(s),uuid:String(s.stationuuid||'')});
@@ -879,12 +887,16 @@
           return station&&playable(station)?{...station,displayName:label}:knownStations.find(s=>s.name===label);
         }).filter(Boolean):[];
         const known=knownStations.filter(s=>q&&relevance(s,q)<4);
-        const local=place?best([...localRows,...globalRows,...known].filter(near),q,5):[];
+        const curatedLocal=place?knownStations.filter(s=>s.localRank&&near(s)&&(!q||relevance(s,q)<4)).sort((a,b)=>a.localRank-b.localRank).slice(0,q?8:10):[];
+        const curatedUrls=new Set(curatedLocal.map(streamUrl));
+        const directoryLocal=place?best([...localRows,...globalRows,...known].filter(s=>near(s)&&!curatedUrls.has(streamUrl(s))),q,5):[];
+        const local=[...curatedLocal,...directoryLocal].slice(0,q?8:12);
         const localUrls=new Set(local.map(streamUrl));
         const featuredUrls=new Set(featured.map(streamUrl));
         const worldwide=best([...globalRows,...known].filter(s=>!localUrls.has(streamUrl(s))&&!featuredUrls.has(streamUrl(s))),q,9);
         $('search-results').replaceChildren();
-        if(local.length){heading('Local & regional · '+(place.region||place.country));addResults(local)}
+        if(curatedLocal.length){heading('Local favorites · '+(place.city||place.region||place.country));addResults(curatedLocal)}
+        if(directoryLocal.length){heading('More nearby stations');addResults(directoryLocal)}
         if(featured.length){heading('Popular online');addResults(featured)}
         if(worldwide.length){heading(q?'Popular everywhere':'Popular stations');addResults(worldwide)}
         if(!local.length&&!featured.length&&!worldwide.length)searchMessage(directoryAvailable?'No playable matches. Try a shorter name or use a stream URL.':'Search is temporarily unavailable. Try again or use a stream URL.');
